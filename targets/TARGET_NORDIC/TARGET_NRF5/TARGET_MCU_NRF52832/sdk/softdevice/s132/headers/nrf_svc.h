@@ -36,7 +36,6 @@
  * 
  */
 
-
 #ifndef NRF_SVC__
 #define NRF_SVC__
 

@@ -35,13 +35,12 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
-
 /**
   @addtogroup nrf_soc_api
   @{
   @defgroup nrf_soc_error SoC Library Error Codes
   @{
-     
+
   @brief Error definitions for the SoC library
 
 */

@@ -35,13 +35,12 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 
  */
- 
 /**
  * @defgroup nrf_soc_api SoC Library API
  * @{
- * 
+ *
  * @brief APIs for the SoC library.
- * 
+ *
  */
 
 #ifndef NRF_SOC_H__
@@ -62,10 +61,10 @@ extern "C" {
  * @{ */
 
 /**@brief The number of the lowest SVC number reserved for the SoC library. */
-#define SOC_SVC_BASE               (0x20)
-#define SOC_SVC_BASE_NOT_AVAILABLE (0x2B)
+#define SOC_SVC_BASE               (0x20)                   /**< Base value for SVCs that are available when the SoftDevice is disabled. */
+#define SOC_SVC_BASE_NOT_AVAILABLE (0x2B)                   /**< Base value for SVCs that are not available when the SoftDevice is disabled. */
 
-/**@brief Guranteed time for application to process radio inactive notification. */
+/**@brief Guaranteed time for application to process radio inactive notification. */
 #define NRF_RADIO_NOTIFICATION_INACTIVE_GUARANTEED_TIME_US  (62)
 
 /**@brief The minimum allowed timeslot extension time. */
@@ -83,9 +82,11 @@ extern "C" {
 #endif
 #ifdef NRF52
 #define SD_EVT_IRQn                       (SWI2_EGU2_IRQn)        /**< SoftDevice Event IRQ number. Used for both protocol events and SoC events. */
-#define SD_EVT_IRQHandler                 (SWI2_EGU2_IRQHandler)  /**< SoftDevice Event IRQ handler. Used for both protocol events and SoC events. */
+#define SD_EVT_IRQHandler                 (SWI2_EGU2_IRQHandler)  /**< SoftDevice Event IRQ handler. Used for both protocol events and SoC events.
+                                                                       The default interrupt priority for this handler is set to 4 */
 #define RADIO_NOTIFICATION_IRQn           (SWI1_EGU1_IRQn)        /**< The radio notification IRQ number. */
-#define RADIO_NOTIFICATION_IRQHandler     (SWI1_EGU1_IRQHandler)  /**< The radio notification IRQ handler. */
+#define RADIO_NOTIFICATION_IRQHandler     (SWI1_EGU1_IRQHandler)  /**< The radio notification IRQ handler.
+                                                                       The default interrupt priority for this handler is set to 4 */
 #endif
 
 #define NRF_RADIO_LENGTH_MIN_US           (100)               /**< The shortest allowed radio timeslot, in microseconds. */
@@ -119,16 +120,6 @@ enum NRF_SOC_SVCS
   SD_MUTEX_NEW = SOC_SVC_BASE_NOT_AVAILABLE,
   SD_MUTEX_ACQUIRE,
   SD_MUTEX_RELEASE,
-  SD_RFU_1,
-  SD_RFU_2,
-  SD_RFU_3,
-  SD_RFU_4,
-  SD_RFU_5,
-  SD_RFU_6,
-  SD_RFU_7,
-  SD_RFU_8,
-  SD_RFU_9,
-  SD_RFU_10,
   SD_RAND_APPLICATION_POOL_CAPACITY_GET,
   SD_RAND_APPLICATION_BYTES_AVAILABLE_GET,
   SD_RAND_APPLICATION_VECTOR_GET,
@@ -138,9 +129,9 @@ enum NRF_SOC_SVCS
   SD_POWER_RESET_REASON_CLR,
   SD_POWER_POF_ENABLE,
   SD_POWER_POF_THRESHOLD_SET,
-  SD_POWER_RAMON_SET,
-  SD_POWER_RAMON_CLR,
-  SD_POWER_RAMON_GET,
+  SD_POWER_RAM_POWER_SET,
+  SD_POWER_RAM_POWER_CLR,
+  SD_POWER_RAM_POWER_GET,
   SD_POWER_GPREGRET_SET,
   SD_POWER_GPREGRET_CLR,
   SD_POWER_GPREGRET_GET,
@@ -178,10 +169,18 @@ enum NRF_POWER_MODES
 /**@brief Power failure thresholds */
 enum NRF_POWER_THRESHOLDS
 {
-  NRF_POWER_THRESHOLD_V21,  /**< 2.1 Volts power failure threshold. */
-  NRF_POWER_THRESHOLD_V23,  /**< 2.3 Volts power failure threshold. */
-  NRF_POWER_THRESHOLD_V25,  /**< 2.5 Volts power failure threshold. */ 
-  NRF_POWER_THRESHOLD_V27   /**< 2.7 Volts power failure threshold. */
+  NRF_POWER_THRESHOLD_V17 = 4UL, /**< 1.7 Volts power failure threshold. */
+  NRF_POWER_THRESHOLD_V18,       /**< 1.8 Volts power failure threshold. */
+  NRF_POWER_THRESHOLD_V19,       /**< 1.9 Volts power failure threshold. */
+  NRF_POWER_THRESHOLD_V20,       /**< 2.0 Volts power failure threshold. */
+  NRF_POWER_THRESHOLD_V21,       /**< 2.1 Volts power failure threshold. */
+  NRF_POWER_THRESHOLD_V22,       /**< 2.2 Volts power failure threshold. */
+  NRF_POWER_THRESHOLD_V23,       /**< 2.3 Volts power failure threshold. */
+  NRF_POWER_THRESHOLD_V24,       /**< 2.4 Volts power failure threshold. */
+  NRF_POWER_THRESHOLD_V25,       /**< 2.5 Volts power failure threshold. */
+  NRF_POWER_THRESHOLD_V26,       /**< 2.6 Volts power failure threshold. */
+  NRF_POWER_THRESHOLD_V27,       /**< 2.7 Volts power failure threshold. */
+  NRF_POWER_THRESHOLD_V28        /**< 2.8 Volts power failure threshold. */
 };
 
 
@@ -242,7 +241,11 @@ enum NRF_RADIO_HFCLK_CFG
 {
   NRF_RADIO_HFCLK_CFG_XTAL_GUARANTEED, /**< The SoftDevice will guarantee that the high frequency clock source is the
                                            external crystal for the whole duration of the timeslot. This should be the
-                                           preferred option for events that use the radio or require high timing accuracy. */
+                                           preferred option for events that use the radio or require high timing accuracy.
+                                           @note The SoftDevice will automatically turn on and off the external crystal,
+                                           at the beginning and end of the timeslot, respectively. The crystal may also
+                                           intentionally be left running after the timeslot, in cases where it is needed
+                                           by the SoftDevice shortly after the end of the timeslot. */
   NRF_RADIO_HFCLK_CFG_NO_GUARANTEE    /**< This configuration allows for earlier and tighter scheduling of timeslots.
                                            The RC oscillator may be the clock source in part or for the whole duration of the timeslot.
                                            The RC oscillator's accuracy must therefore be taken into consideration.
@@ -254,7 +257,7 @@ enum NRF_RADIO_HFCLK_CFG
 enum NRF_RADIO_PRIORITY
 {
   NRF_RADIO_PRIORITY_HIGH,                          /**< High (equal priority as the normal connection priority of the SoftDevice stack(s)). */
-  NRF_RADIO_PRIORITY_NORMAL,                        /**< Normal (equal priority as the priority of secondary activites of the SoftDevice stack(s)). */
+  NRF_RADIO_PRIORITY_NORMAL,                        /**< Normal (equal priority as the priority of secondary activities of the SoftDevice stack(s)). */
 };
 
 /**@brief Radio timeslot request type. */
@@ -316,7 +319,7 @@ typedef struct
   {
     nrf_radio_request_earliest_t  earliest;         /**< Parameters for requesting a radio timeslot as early as possible. */
     nrf_radio_request_normal_t    normal;           /**< Parameters for requesting a normal radio timeslot. */
-  } params;
+  } params;                                         /**< Parameter union. */
 } nrf_radio_request_t;
 
 /**@brief Return parameters of the radio timeslot signal callback. */
@@ -333,7 +336,7 @@ typedef struct
     {
       uint32_t              length_us;              /**< Requested extension of the radio timeslot duration (microseconds) (for minimum time see @ref NRF_RADIO_MINIMUM_TIMESLOT_LENGTH_EXTENSION_TIME_US). */
     } extend;                                       /**< Additional parameters for return_code @ref NRF_RADIO_SIGNAL_CALLBACK_ACTION_EXTEND. */
-  } params;
+  } params;                                         /**< Parameter union. */
 } nrf_radio_signal_callback_return_param_t;
 
 /**@brief The radio timeslot signal callback type.
@@ -351,9 +354,9 @@ typedef struct
 typedef nrf_radio_signal_callback_return_param_t * (*nrf_radio_signal_callback_t) (uint8_t signal_type);
 
 /**@brief AES ECB parameter typedefs */
-typedef uint8_t soc_ecb_key_t[SOC_ECB_KEY_LENGTH];
-typedef uint8_t soc_ecb_cleartext_t[SOC_ECB_CLEARTEXT_LENGTH];
-typedef uint8_t soc_ecb_ciphertext_t[SOC_ECB_CIPHERTEXT_LENGTH];
+typedef uint8_t soc_ecb_key_t[SOC_ECB_KEY_LENGTH];                /**< Encryption key type. */
+typedef uint8_t soc_ecb_cleartext_t[SOC_ECB_CLEARTEXT_LENGTH];    /**< Cleartext data type. */
+typedef uint8_t soc_ecb_ciphertext_t[SOC_ECB_CIPHERTEXT_LENGTH];  /**< Ciphertext data type. */
 
 /**@brief AES ECB data structure */
 typedef struct
@@ -367,9 +370,9 @@ typedef struct
           to @ref sd_ecb_blocks_encrypt.*/
 typedef struct
 {
-  soc_ecb_key_t*        p_key;           /**< Pointer to the Encryption key. */
-  soc_ecb_cleartext_t*  p_cleartext;     /**< Pointer to the Cleartext data. */
-  soc_ecb_ciphertext_t* p_ciphertext;    /**< Pointer to the Ciphertext data. */
+  soc_ecb_key_t const *       p_key;           /**< Pointer to the Encryption key. */
+  soc_ecb_cleartext_t const * p_cleartext;     /**< Pointer to the Cleartext data. */
+  soc_ecb_ciphertext_t *      p_ciphertext;    /**< Pointer to the Ciphertext data. */
 } nrf_ecb_hal_data_block_t;
 
 /**@} */
@@ -428,7 +431,7 @@ SVCALL(SD_RAND_APPLICATION_BYTES_AVAILABLE_GET, uint32_t, sd_rand_application_by
 */
 SVCALL(SD_RAND_APPLICATION_VECTOR_GET, uint32_t, sd_rand_application_vector_get(uint8_t * p_buff, uint8_t length));
 
-/**@brief Gets the reset reason register. 
+/**@brief Gets the reset reason register.
  *
  * @param[out]  p_reset_reason  Contents of the NRF_POWER->RESETREAS register.
  *
@@ -436,7 +439,7 @@ SVCALL(SD_RAND_APPLICATION_VECTOR_GET, uint32_t, sd_rand_application_vector_get(
  */
 SVCALL(SD_POWER_RESET_REASON_GET, uint32_t, sd_power_reset_reason_get(uint32_t * p_reset_reason));
 
-/**@brief Clears the bits of the reset reason register. 
+/**@brief Clears the bits of the reset reason register.
  *
  * @param[in] reset_reason_clr_msk Contains the bits to clear from the reset reason register.
  *
@@ -453,7 +456,7 @@ SVCALL(SD_POWER_RESET_REASON_CLR, uint32_t, sd_power_reset_reason_clr(uint32_t r
  */
 SVCALL(SD_POWER_MODE_SET, uint32_t, sd_power_mode_set(uint8_t power_mode));
 
-/**@brief Puts the chip in System OFF mode. 
+/**@brief Puts the chip in System OFF mode.
  *
  * @retval ::NRF_ERROR_SOC_POWER_OFF_SHOULD_NOT_RETURN
  */
@@ -461,7 +464,7 @@ SVCALL(SD_POWER_SYSTEM_OFF, uint32_t, sd_power_system_off(void));
 
 /**@brief Enables or disables the power-fail comparator.
  *
- * Enabling this will give a softdevice event (NRF_EVT_POWER_FAILURE_WARNING) when the power failure warning occurs.
+ * Enabling this will give a SoftDevice event (NRF_EVT_POWER_FAILURE_WARNING) when the power failure warning occurs.
  * The event can be retrieved with sd_evt_get();
  *
  * @param[in] pof_enable    True if the power-fail comparator should be enabled, false if it should be disabled.
@@ -479,53 +482,62 @@ SVCALL(SD_POWER_POF_ENABLE, uint32_t, sd_power_pof_enable(uint8_t pof_enable));
  */
 SVCALL(SD_POWER_POF_THRESHOLD_SET, uint32_t, sd_power_pof_threshold_set(uint8_t threshold));
 
-/**@brief Sets bits in the NRF_POWER->RAMON register.
+/**@brief Writes the NRF_POWER->RAM[index].POWERSET register.
  *
- * @param[in] ramon Contains the bits needed to be set in the NRF_POWER->RAMON register.
- *
- * @retval ::NRF_SUCCESS
- */
-SVCALL(SD_POWER_RAMON_SET, uint32_t, sd_power_ramon_set(uint32_t ramon));
-
-/**@brief Clears bits in the NRF_POWER->RAMON register.
- *
- * @param ramon Contains the bits needed to be cleared in the NRF_POWER->RAMON register.
+ * @param[in] index Contains the index in the NRF_POWER->RAM[index].POWERSET register to write to.
+ * @param[in] ram_powerset Contains the word to write to the NRF_POWER->RAM[index].POWERSET register.
  *
  * @retval ::NRF_SUCCESS
  */
-SVCALL(SD_POWER_RAMON_CLR, uint32_t, sd_power_ramon_clr(uint32_t ramon));
+SVCALL(SD_POWER_RAM_POWER_SET, uint32_t, sd_power_ram_power_set(uint8_t index, uint32_t ram_powerset));
 
-/**@brief Get contents of NRF_POWER->RAMON register, indicates power status of ram blocks.
+/**@brief Writes the NRF_POWER->RAM[index].POWERCLR register.
  *
- * @param[out] p_ramon Content of NRF_POWER->RAMON register.
+ * @param[in] index Contains the index in the NRF_POWER->RAM[index].POWERCLR register to write to.
+ * @param[in] ram_powerclr Contains the word to write to the NRF_POWER->RAM[index].POWERCLR register.
  *
  * @retval ::NRF_SUCCESS
  */
-SVCALL(SD_POWER_RAMON_GET, uint32_t, sd_power_ramon_get(uint32_t * p_ramon));
+SVCALL(SD_POWER_RAM_POWER_CLR, uint32_t, sd_power_ram_power_clr(uint8_t index, uint32_t ram_powerclr));
 
-/**@brief Set bits in the NRF_POWER->GPREGRET register.
+/**@brief Get contents of NRF_POWER->RAM[index].POWER register, indicates power status of RAM[index] blocks.
  *
+ * @param[in] index Contains the index in the NRF_POWER->RAM[index].POWER register to read from.
+ * @param[out] p_ram_power Content of NRF_POWER->RAM[index].POWER register.
+ *
+ * @retval ::NRF_SUCCESS
+ */
+SVCALL(SD_POWER_RAM_POWER_GET, uint32_t, sd_power_ram_power_get(uint8_t index, uint32_t * p_ram_power));
+
+/**@brief Set bits in the general purpose retention registers (NRF_POWER->GPREGRET*).
+ *
+ * @param[in] gpregret_id 0 for GPREGRET, 1 for GPREGRET2.
  * @param[in] gpregret_msk Bits to be set in the GPREGRET register.
  *
+ * @note nRF51 does only have one general purpose retained register, so gpregret_id must be 0 on nRF51.
  * @retval ::NRF_SUCCESS
  */
-SVCALL(SD_POWER_GPREGRET_SET, uint32_t, sd_power_gpregret_set(uint32_t gpregret_msk));
+SVCALL(SD_POWER_GPREGRET_SET, uint32_t, sd_power_gpregret_set(uint32_t gpregret_id, uint32_t gpregret_msk));
 
-/**@brief Clear bits in the NRF_POWER->GPREGRET register.
+/**@brief Clear bits in the general purpose retention registers (NRF_POWER->GPREGRET*).
  *
+ * @param[in] gpregret_id 0 for GPREGRET, 1 for GPREGRET2.
  * @param[in] gpregret_msk Bits to be clear in the GPREGRET register.
  *
+ * @note nRF51 does only have one general purpose retained register, so gpregret_id must be 0 on nRF51.
  * @retval ::NRF_SUCCESS
  */
-SVCALL(SD_POWER_GPREGRET_CLR, uint32_t, sd_power_gpregret_clr(uint32_t gpregret_msk));
+SVCALL(SD_POWER_GPREGRET_CLR, uint32_t, sd_power_gpregret_clr(uint32_t gpregret_id, uint32_t gpregret_msk));
 
-/**@brief Get contents of the NRF_POWER->GPREGRET register.
+/**@brief Get contents of the general purpose retention registers (NRF_POWER->GPREGRET*).
  *
+ * @param[in] gpregret_id 0 for GPREGRET, 1 for GPREGRET2.
  * @param[out] p_gpregret Contents of the GPREGRET register.
  *
+ * @note nRF51 does only have one general purpose retained register, so gpregret_id must be 0 on nRF51.
  * @retval ::NRF_SUCCESS
  */
-SVCALL(SD_POWER_GPREGRET_GET, uint32_t, sd_power_gpregret_get(uint32_t *p_gpregret));
+SVCALL(SD_POWER_GPREGRET_GET, uint32_t, sd_power_gpregret_get(uint32_t gpregret_id, uint32_t *p_gpregret));
 
 /**@brief Sets the DCDC mode.
  *
@@ -573,18 +585,21 @@ SVCALL(SD_CLOCK_HFCLK_RELEASE, uint32_t, sd_clock_hfclk_release(void));
 SVCALL(SD_CLOCK_HFCLK_IS_RUNNING, uint32_t, sd_clock_hfclk_is_running(uint32_t * p_is_running));
 
 /**@brief Waits for an application event.
- * 
- * An application event is either an application interrupt or a pended interrupt when the
- * interrupt is disabled. When the interrupt is enabled it will be taken immediately since
- * this function will wait in thread mode, then the execution will return in the application's
- * main thread. When an interrupt is disabled and gets pended it will return to the application's 
- * thread main. The application must ensure that the pended flag is cleared using 
- * ::sd_nvic_ClearPendingIRQ in order to sleep using this function. This is only necessary for
- * disabled interrupts, as the interrupt handler will clear the pending flag automatically for
- * enabled interrupts.
  *
- * In order to wake up from disabled interrupts, the SEVONPEND flag has to be set in the Cortex-M0
- * System Control Register (SCR). @sa CMSIS_SCB
+ * An application event is either an application interrupt or a pended interrupt when the interrupt
+ * is disabled.
+ *
+ * When the application waits for an application event by calling this function, an interrupt that
+ * is enabled will be taken immediately on pending since this function will wait in thread mode,
+ * then the execution will return in the application's main thread.
+ *
+ * In order to wake up from disabled interrupts, the SEVONPEND flag has to be set in the Cortex-M
+ * MCU's System Control Register (SCR), CMSIS_SCB. In that case, when a disabled interrupt gets
+ * pended, this function will return to the application's main thread.
+ *
+ * @note The application must ensure that the pended flag is cleared using ::sd_nvic_ClearPendingIRQ
+ *       in order to sleep using this function. This is only necessary for disabled interrupts, as
+ *       the interrupt handler will clear the pending flag automatically for enabled interrupts.
  *
  * @note If an application interrupt has happened since the last time sd_app_evt_wait was
  *       called this function will return immediately and not go to sleep. This is to avoid race
@@ -675,9 +690,9 @@ SVCALL(SD_PPI_GROUP_GET, uint32_t, sd_ppi_group_get(uint8_t group_num, uint32_t 
  * @note
  *      - The notification signal latency depends on the interrupt priority settings of SWI used
  *        for notification signal.
- *      - To ensure that the radio notification signal behaves in a consistent way, always 
- *        configure radio notifications when there is no protocol stack or other SoftDevice 
- *        activity in progress. It is recommended that the radio notification signal is 
+ *      - To ensure that the radio notification signal behaves in a consistent way, the radio
+ *        notifications must be configured when there is no protocol stack or other SoftDevice
+ *        activity in progress. It is recommended that the radio notification signal is
  *        configured directly after the SoftDevice has been enabled.
  *      - In the period between the ACTIVE signal and the start of the Radio Event, the SoftDevice
  *        will interrupt the application to do Radio Event preparation.
@@ -691,10 +706,12 @@ SVCALL(SD_PPI_GROUP_GET, uint32_t, sd_ppi_group_get(uint8_t group_num, uint32_t 
  *                       @ref NRF_RADIO_NOTIFICATION_TYPE_NONE.
  *
  * @param[in]  distance  Distance between the notification signal and start of radio activity, see @ref NRF_RADIO_NOTIFICATION_DISTANCES.
- *                       This parameter is ignored when @ref NRF_RADIO_NOTIFICATION_TYPE_NONE or 
- *                       @ref NRF_RADIO_NOTIFICATION_TYPE_INT_ON_INACTIVE is used. 
+ *                       This parameter is ignored when @ref NRF_RADIO_NOTIFICATION_TYPE_NONE or
+ *                       @ref NRF_RADIO_NOTIFICATION_TYPE_INT_ON_INACTIVE is used.
  *
  * @retval ::NRF_ERROR_INVALID_PARAM The group number is invalid.
+ * @retval ::NRF_ERROR_INVALID_STATE A protocol stack or other SoftDevice is running. Stop all
+ *                                   running activities and retry.
  * @retval ::NRF_SUCCESS
  */
 SVCALL(SD_RADIO_NOTIFICATION_CFG_SET, uint32_t, sd_radio_notification_cfg_set(uint8_t type, uint8_t distance));
@@ -739,16 +756,16 @@ SVCALL(SD_ECB_BLOCKS_ENCRYPT, uint32_t, sd_ecb_blocks_encrypt(uint8_t block_coun
  * @param[out] p_evt_id Set to one of the values in @ref NRF_SOC_EVTS, if any events are pending.
  *
  * @retval ::NRF_SUCCESS An event was pending. The event id is written in the p_evt_id parameter.
- * @retval ::NRF_ERROR_NOT_FOUND No pending events. 
+ * @retval ::NRF_ERROR_NOT_FOUND No pending events.
  */
 SVCALL(SD_EVT_GET, uint32_t, sd_evt_get(uint32_t * p_evt_id));
 
 /**@brief Get the temperature measured on the chip
- * 
- * This function will block until the temperature measurement is done.
- * It takes around 50us from call to return.
  *
- * @param[out] p_temp Result of temperature measurement. Die temperature in 0.25 degrees celsius.
+ * This function will block until the temperature measurement is done.
+ * It takes around 50 us from call to return.
+ *
+ * @param[out] p_temp Result of temperature measurement. Die temperature in 0.25 degrees Celsius.
  *
  * @retval ::NRF_SUCCESS A temperature measurement was done, and the temperature was written to temp
  */
@@ -764,7 +781,7 @@ SVCALL(SD_TEMP_GET, uint32_t, sd_temp_get(int32_t * p_temp));
 *      - @ref NRF_EVT_FLASH_OPERATION_SUCCESS - The command was successfully completed.
 *      - @ref NRF_EVT_FLASH_OPERATION_ERROR   - The command could not be started.
 *
-* If the SoftDevice is not enabled no event will be generated, and this call will return @ref NRF_SUCCESS when the 
+* If the SoftDevice is not enabled no event will be generated, and this call will return @ref NRF_SUCCESS when the
  * write has been completed
 *
 * @note
@@ -772,6 +789,8 @@ SVCALL(SD_TEMP_GET, uint32_t, sd_temp_get(int32_t * p_temp));
 *        they will not interfere with the flash access. This means that all interrupts will be blocked
 *        for a predictable time (depending on the NVMC specification in nRF51 Series Reference Manual
 *        and the command parameters).
+*      - The data in the p_src buffer should not be modified before the @ref NRF_EVT_FLASH_OPERATION_SUCCESS
+*        or the @ref NRF_EVT_FLASH_OPERATION_ERROR have been received if the SoftDevice is enabled.
 *
 *
 * @param[in]  p_dst Pointer to start of flash location to be written.
@@ -784,7 +803,7 @@ SVCALL(SD_TEMP_GET, uint32_t, sd_temp_get(int32_t * p_temp));
 * @retval ::NRF_ERROR_FORBIDDEN      Tried to write to or read from protected location.
 * @retval ::NRF_SUCCESS              The command was accepted.
 */
-SVCALL(SD_FLASH_WRITE, uint32_t, sd_flash_write(uint32_t * const p_dst, uint32_t const * const p_src, uint32_t size));
+SVCALL(SD_FLASH_WRITE, uint32_t, sd_flash_write(uint32_t * p_dst, uint32_t const * p_src, uint32_t size));
 
 
 /**@brief Flash Erase page
@@ -796,7 +815,7 @@ SVCALL(SD_FLASH_WRITE, uint32_t, sd_flash_write(uint32_t * const p_dst, uint32_t
 *      - @ref NRF_EVT_FLASH_OPERATION_SUCCESS - The command was successfully completed.
 *      - @ref NRF_EVT_FLASH_OPERATION_ERROR   - The command could not be started.
 *
-* If the SoftDevice is not enabled no event will be generated, and this call will return @ref NRF_SUCCESS when the 
+* If the SoftDevice is not enabled no event will be generated, and this call will return @ref NRF_SUCCESS when the
 * erase has been completed
 *
 * @note
@@ -806,7 +825,8 @@ SVCALL(SD_FLASH_WRITE, uint32_t, sd_flash_write(uint32_t * const p_dst, uint32_t
 *        and the command parameters).
 *
 *
-* @param[in]  page_number Pagenumber of the page to erase
+* @param[in]  page_number           Page number of the page to erase
+*
 * @retval ::NRF_ERROR_INTERNAL      If a new session could not be opened due to an internal error.
 * @retval ::NRF_ERROR_INVALID_ADDR  Tried to erase to a non existing flash page.
 * @retval ::NRF_ERROR_BUSY          The previous command has not yet completed.
@@ -874,11 +894,11 @@ SVCALL(SD_FLASH_PROTECT, uint32_t, sd_flash_protect(uint32_t block_cfg0, uint32_
  * @note The request type is determined by p_request->request_type, and can be one of @ref NRF_RADIO_REQ_TYPE_EARLIEST
  *       and @ref NRF_RADIO_REQ_TYPE_NORMAL. The first request in a session must always be of type @ref NRF_RADIO_REQ_TYPE_EARLIEST.
  * @note For a normal request (@ref NRF_RADIO_REQ_TYPE_NORMAL), the start time of a radio timeslot is specified by
- *       p_request->distance_us and is given relative to the start of the previous timeslot. 
+ *       p_request->distance_us and is given relative to the start of the previous timeslot.
  * @note A too small p_request->distance_us will lead to a @ref NRF_EVT_RADIO_BLOCKED event.
  * @note Timeslots scheduled too close will lead to a @ref NRF_EVT_RADIO_BLOCKED event.
  * @note See the SoftDevice Specification for more on radio timeslot scheduling, distances and lengths.
- * @note If an opportunity for the first radio timeslot is not found before 100ms after the call to this
+ * @note If an opportunity for the first radio timeslot is not found before 100 ms after the call to this
  *       function, it is not scheduled, and instead a @ref NRF_EVT_RADIO_BLOCKED event is sent.
  *       The application may then try to schedule the first radio timeslot again.
  * @note Successful requests will result in nrf_radio_signal_callback_t(@ref NRF_RADIO_CALLBACK_SIGNAL_TYPE_START).
@@ -887,7 +907,7 @@ SVCALL(SD_FLASH_PROTECT, uint32_t, sd_flash_protect(uint32_t block_cfg0, uint32_
  * @note The nrf_radio_signal_callback_t(@ref NRF_RADIO_CALLBACK_SIGNAL_TYPE_START) call has a latency relative to the
  *       specified radio timeslot start, but this does not affect the actual start time of the timeslot.
  * @note NRF_TIMER0 is reset at the start of the radio timeslot, and is clocked at 1MHz from the high frequency
- *       (16 MHz) clock source. If p_request->hfclk_force_xtal is true, the high frequency clock is 
+ *       (16 MHz) clock source. If p_request->hfclk_force_xtal is true, the high frequency clock is
  *       guaranteed to be clocked from the external crystal.
  * @note The SoftDevice will neither access the NRF_RADIO peripheral nor the NRF_TIMER0 peripheral
  *       during the radio timeslot.
@@ -899,7 +919,7 @@ SVCALL(SD_FLASH_PROTECT, uint32_t, sd_flash_protect(uint32_t block_cfg0, uint32_
  * @retval ::NRF_ERROR_INVALID_PARAM If the parameters of p_request are not valid.
  * @retval ::NRF_SUCCESS Otherwise.
  */
- SVCALL(SD_RADIO_REQUEST, uint32_t, sd_radio_request(nrf_radio_request_t * p_request ));
+ SVCALL(SD_RADIO_REQUEST, uint32_t, sd_radio_request(nrf_radio_request_t const * p_request));
 
 /**@} */
 

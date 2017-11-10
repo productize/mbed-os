@@ -36,18 +36,17 @@
  * 
  */
 
-
 /**
   @addtogroup BLE_GATT Generic Attribute Profile (GATT) Common
   @{
   @brief  Common definitions and prototypes for the GATT interfaces.
  */
 
-#ifndef NRF_BLE_GATT_H__
-#define NRF_BLE_GATT_H__
+#ifndef BLE_GATT_H__
+#define BLE_GATT_H__
 
-#include "nrf_ble_types.h"
-#include "nrf_ble_ranges.h"
+#include "ble_types.h"
+#include "ble_ranges.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -56,12 +55,8 @@ extern "C" {
 /** @addtogroup BLE_GATT_DEFINES Defines
  * @{ */
 
-/** @brief Default MTU size. */
-#define GATT_MTU_SIZE_DEFAULT 23
-
-/** @brief Only the default MTU size of 23 is currently supported. */
-#define GATT_RX_MTU 23
-
+/** @brief Default ATT MTU, in bytes. */
+#define BLE_GATT_ATT_MTU_DEFAULT          23
 
 /**@brief Invalid Attribute Handle. */
 #define BLE_GATT_HANDLE_INVALID            0x0000
@@ -74,7 +69,7 @@ extern "C" {
 
 /** @defgroup BLE_GATT_TIMEOUT_SOURCES GATT Timeout sources
  * @{ */
-#define BLE_GATT_TIMEOUT_SRC_PROTOCOL                  0x00 /**< ATT Protocol timeout. */
+#define BLE_GATT_TIMEOUT_SRC_PROTOCOL      0x00  /**< ATT Protocol timeout. */
 /** @} */
 
 /** @defgroup BLE_GATT_WRITE_OPS GATT Write operations
@@ -89,8 +84,8 @@ extern "C" {
 
 /** @defgroup BLE_GATT_EXEC_WRITE_FLAGS GATT Execute Write flags
  * @{ */
-#define BLE_GATT_EXEC_WRITE_FLAG_PREPARED_CANCEL 0x00
-#define BLE_GATT_EXEC_WRITE_FLAG_PREPARED_WRITE  0x01
+#define BLE_GATT_EXEC_WRITE_FLAG_PREPARED_CANCEL 0x00   /**< Cancel prepared write. */
+#define BLE_GATT_EXEC_WRITE_FLAG_PREPARED_WRITE  0x01   /**< Execute prepared write. */
 /** @} */
 
 /** @defgroup BLE_GATT_HVX_TYPES GATT Handle Value operations
@@ -112,7 +107,7 @@ extern "C" {
 #define BLE_GATT_STATUS_ATTERR_INSUF_AUTHENTICATION       0x0105  /**< ATT Error: Authenticated link required. */
 #define BLE_GATT_STATUS_ATTERR_REQUEST_NOT_SUPPORTED      0x0106  /**< ATT Error: Used in ATT as Request Not Supported. */
 #define BLE_GATT_STATUS_ATTERR_INVALID_OFFSET             0x0107  /**< ATT Error: Offset specified was past the end of the attribute. */
-#define BLE_GATT_STATUS_ATTERR_INSUF_AUTHORIZATION        0x0108  /**< ATT Error: Used in ATT as Insufficient Authorisation. */
+#define BLE_GATT_STATUS_ATTERR_INSUF_AUTHORIZATION        0x0108  /**< ATT Error: Used in ATT as Insufficient Authorization. */
 #define BLE_GATT_STATUS_ATTERR_PREPARE_QUEUE_FULL         0x0109  /**< ATT Error: Used in ATT as Prepare Queue Full. */
 #define BLE_GATT_STATUS_ATTERR_ATTRIBUTE_NOT_FOUND        0x010A  /**< ATT Error: Used in ATT as Attribute not found. */
 #define BLE_GATT_STATUS_ATTERR_ATTRIBUTE_NOT_LONG         0x010B  /**< ATT Error: Attribute cannot be read or written using read/write blob requests. */
@@ -181,6 +176,22 @@ extern "C" {
 /** @addtogroup BLE_GATT_STRUCTURES Structures
  * @{ */
 
+/**
+ * @brief BLE GATT connection configuration parameters, set with @ref sd_ble_cfg_set.
+ *
+ * @retval NRF_ERROR_INVALID_PARAM att_mtu is smaller than @ref BLE_GATT_ATT_MTU_DEFAULT.
+ */
+typedef struct
+{
+  uint16_t  att_mtu;          /**< Maximum size of ATT packet the SoftDevice can send or receive.
+                                   The default and minimum value is @ref BLE_GATT_ATT_MTU_DEFAULT.
+                                   @mscs
+                                   @mmsc{@ref BLE_GATTC_MTU_EXCHANGE}
+                                   @mmsc{@ref BLE_GATTS_MTU_EXCHANGE}
+                                   @endmscs
+                              */
+} ble_gatt_conn_cfg_t;
+
 /**@brief GATT Characteristic Properties. */
 typedef struct
 {
@@ -189,7 +200,7 @@ typedef struct
   uint8_t read            :1; /**< Reading the value permitted. */
   uint8_t write_wo_resp   :1; /**< Writing the value with Write Command permitted. */
   uint8_t write           :1; /**< Writing the value with Write Request permitted. */
-  uint8_t notify          :1; /**< Notications of the value permitted. */
+  uint8_t notify          :1; /**< Notification of the value permitted. */
   uint8_t indicate        :1; /**< Indications of the value permitted. */
   uint8_t auth_signed_wr  :1; /**< Writing the value with Signed Write Command permitted. */
 } ble_gatt_char_props_t;
@@ -202,14 +213,11 @@ typedef struct
   uint8_t wr_aux          :1; /**< Writing the Characteristic User Description descriptor permitted. */
 } ble_gatt_char_ext_props_t;
 
+/** @} */
+
 #ifdef __cplusplus
 }
 #endif
-#endif // NRF_BLE_GATT_H__
+#endif // BLE_GATT_H__
 
 /** @} */
-
-/**
-  @}
-  @}
-*/

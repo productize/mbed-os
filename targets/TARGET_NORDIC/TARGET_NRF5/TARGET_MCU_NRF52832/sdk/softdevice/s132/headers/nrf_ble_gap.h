@@ -36,18 +36,18 @@
  * 
  */
 
-
 /**
   @addtogroup BLE_GAP Generic Access Profile (GAP)
   @{
   @brief Definitions and prototypes for the GAP interface.
  */
 
-#ifndef NRF_BLE_GAP_H__
-#define NRF_BLE_GAP_H__
+#ifndef BLE_GAP_H__
+#define BLE_GAP_H__
 
-#include "nrf_ble_types.h"
-#include "nrf_ble_ranges.h"
+
+#include "ble_types.h"
+#include "ble_ranges.h"
 #include "nrf_svc.h"
 
 #ifdef __cplusplus
@@ -61,37 +61,42 @@ extern "C" {
  */
 enum BLE_GAP_SVCS
 {
-  SD_BLE_GAP_ADDRESS_SET  = BLE_GAP_SVC_BASE,  /**< Set own Bluetooth Address. */
-  SD_BLE_GAP_ADDRESS_GET,                      /**< Get own Bluetooth Address. */
-  SD_BLE_GAP_ADV_DATA_SET,                     /**< Set Advertising Data. */
-  SD_BLE_GAP_ADV_START,                        /**< Start Advertising. */
-  SD_BLE_GAP_ADV_STOP,                         /**< Stop Advertising. */
-  SD_BLE_GAP_CONN_PARAM_UPDATE,                /**< Connection Parameter Update. */
-  SD_BLE_GAP_DISCONNECT,                       /**< Disconnect. */
-  SD_BLE_GAP_TX_POWER_SET,                     /**< Set TX Power. */
-  SD_BLE_GAP_APPEARANCE_SET,                   /**< Set Appearance. */
-  SD_BLE_GAP_APPEARANCE_GET,                   /**< Get Appearance. */
-  SD_BLE_GAP_PPCP_SET,                         /**< Set PPCP. */
-  SD_BLE_GAP_PPCP_GET,                         /**< Get PPCP. */
-  SD_BLE_GAP_DEVICE_NAME_SET,                  /**< Set Device Name. */
-  SD_BLE_GAP_DEVICE_NAME_GET,                  /**< Get Device Name. */
-  SD_BLE_GAP_AUTHENTICATE,                     /**< Initiate Pairing/Bonding. */
-  SD_BLE_GAP_SEC_PARAMS_REPLY,                 /**< Reply with Security Parameters. */
-  SD_BLE_GAP_AUTH_KEY_REPLY,                   /**< Reply with an authentication key. */
-  SD_BLE_GAP_LESC_DHKEY_REPLY,                 /**< Reply with an LE Secure Connections DHKey. */
-  SD_BLE_GAP_KEYPRESS_NOTIFY,                  /**< Notify of a keypress during an authentication procedure. */
-  SD_BLE_GAP_LESC_OOB_DATA_GET,                /**< Get the local LE Secure Connections OOB data. */
-  SD_BLE_GAP_LESC_OOB_DATA_SET,                /**< Set the remote LE Secure Connections OOB data. */
-  SD_BLE_GAP_ENCRYPT,                          /**< Initiate encryption procedure. */
-  SD_BLE_GAP_SEC_INFO_REPLY,                   /**< Reply with Security Information. */
-  SD_BLE_GAP_CONN_SEC_GET,                     /**< Obtain connection security level. */
-  SD_BLE_GAP_RSSI_START,                       /**< Start reporting of changes in RSSI. */
-  SD_BLE_GAP_RSSI_STOP,                        /**< Stop reporting of changes in RSSI. */
-  SD_BLE_GAP_SCAN_START,                       /**< Start Scanning. */
-  SD_BLE_GAP_SCAN_STOP,                        /**< Stop Scanning. */
-  SD_BLE_GAP_CONNECT,                          /**< Connect. */
-  SD_BLE_GAP_CONNECT_CANCEL,                   /**< Cancel ongoing connection procedure. */
-  SD_BLE_GAP_RSSI_GET,                         /**< Get the last RSSI sample. */
+  SD_BLE_GAP_ADDR_SET = BLE_GAP_SVC_BASE,       /**< Set own Bluetooth Address. */
+  SD_BLE_GAP_ADDR_GET,                          /**< Get own Bluetooth Address. */
+  SD_BLE_GAP_WHITELIST_SET,                     /**< Set active whitelist. */
+  SD_BLE_GAP_DEVICE_IDENTITIES_SET,             /**< Set device identity list. */
+  SD_BLE_GAP_PRIVACY_SET,                       /**< Set Privacy settings*/
+  SD_BLE_GAP_PRIVACY_GET,                       /**< Get Privacy settings*/
+  SD_BLE_GAP_ADV_DATA_SET,                      /**< Set Advertising Data. */
+  SD_BLE_GAP_ADV_START,                         /**< Start Advertising. */
+  SD_BLE_GAP_ADV_STOP,                          /**< Stop Advertising. */
+  SD_BLE_GAP_CONN_PARAM_UPDATE,                 /**< Connection Parameter Update. */
+  SD_BLE_GAP_DISCONNECT,                        /**< Disconnect. */
+  SD_BLE_GAP_TX_POWER_SET,                      /**< Set TX Power. */
+  SD_BLE_GAP_APPEARANCE_SET,                    /**< Set Appearance. */
+  SD_BLE_GAP_APPEARANCE_GET,                    /**< Get Appearance. */
+  SD_BLE_GAP_PPCP_SET,                          /**< Set PPCP. */
+  SD_BLE_GAP_PPCP_GET,                          /**< Get PPCP. */
+  SD_BLE_GAP_DEVICE_NAME_SET,                   /**< Set Device Name. */
+  SD_BLE_GAP_DEVICE_NAME_GET,                   /**< Get Device Name. */
+  SD_BLE_GAP_AUTHENTICATE,                      /**< Initiate Pairing/Bonding. */
+  SD_BLE_GAP_SEC_PARAMS_REPLY,                  /**< Reply with Security Parameters. */
+  SD_BLE_GAP_AUTH_KEY_REPLY,                    /**< Reply with an authentication key. */
+  SD_BLE_GAP_LESC_DHKEY_REPLY,                  /**< Reply with an LE Secure Connections DHKey. */
+  SD_BLE_GAP_KEYPRESS_NOTIFY,                   /**< Notify of a keypress during an authentication procedure. */
+  SD_BLE_GAP_LESC_OOB_DATA_GET,                 /**< Get the local LE Secure Connections OOB data. */
+  SD_BLE_GAP_LESC_OOB_DATA_SET,                 /**< Set the remote LE Secure Connections OOB data. */
+  SD_BLE_GAP_ENCRYPT,                           /**< Initiate encryption procedure. */
+  SD_BLE_GAP_SEC_INFO_REPLY,                    /**< Reply with Security Information. */
+  SD_BLE_GAP_CONN_SEC_GET,                      /**< Obtain connection security level. */
+  SD_BLE_GAP_RSSI_START,                        /**< Start reporting of changes in RSSI. */
+  SD_BLE_GAP_RSSI_STOP,                         /**< Stop reporting of changes in RSSI. */
+  SD_BLE_GAP_SCAN_START,                        /**< Start Scanning. */
+  SD_BLE_GAP_SCAN_STOP,                         /**< Stop Scanning. */
+  SD_BLE_GAP_CONNECT,                           /**< Connect. */
+  SD_BLE_GAP_CONNECT_CANCEL,                    /**< Cancel ongoing connection procedure. */
+  SD_BLE_GAP_RSSI_GET,                          /**< Get the last RSSI sample. */
+  SD_BLE_GAP_DATA_LENGTH_UPDATE,                /**< Initiate or respond to a Data Length Update Procedure. */
 };
 
 /**@brief GAP Event IDs.
@@ -115,7 +120,9 @@ enum BLE_GAP_EVTS
   BLE_GAP_EVT_ADV_REPORT,                       /**< Advertising report.                             \n See @ref ble_gap_evt_adv_report_t.           */
   BLE_GAP_EVT_SEC_REQUEST,                      /**< Security Request.                               \n See @ref ble_gap_evt_sec_request_t.          */
   BLE_GAP_EVT_CONN_PARAM_UPDATE_REQUEST,        /**< Connection Parameter Update Request.            \n Reply with @ref sd_ble_gap_conn_param_update. \n See @ref ble_gap_evt_conn_param_update_request_t. */
-  BLE_GAP_EVT_SCAN_REQ_REPORT,                  /**< Scan request report.                            \n See @ref ble_gap_evt_scan_req_report_t.      */
+  BLE_GAP_EVT_SCAN_REQ_REPORT,                  /**< Scan request report.                            \n See @ref ble_gap_evt_scan_req_report_t. */
+  BLE_GAP_EVT_DATA_LENGTH_UPDATE_REQUEST,       /**< Data Length Update request.                     \n Reply with @ref sd_ble_gap_data_length_update.\n See @ref ble_gap_evt_data_length_update_request_t. */
+  BLE_GAP_EVT_DATA_LENGTH_UPDATE,               /**< LL Data Channel PDU payload length updated.     \n See @ref ble_gap_evt_data_length_update_t. */
 };
 
 /**@brief GAP Option IDs.
@@ -126,9 +133,21 @@ enum BLE_GAP_OPTS
   BLE_GAP_OPT_CH_MAP  = BLE_GAP_OPT_BASE,       /**< Channel Map. @ref ble_gap_opt_ch_map_t  */
   BLE_GAP_OPT_LOCAL_CONN_LATENCY,               /**< Local connection latency. @ref ble_gap_opt_local_conn_latency_t */
   BLE_GAP_OPT_PASSKEY,                          /**< Set passkey. @ref ble_gap_opt_passkey_t */
-  BLE_GAP_OPT_PRIVACY,                          /**< Custom privacy. @ref ble_gap_opt_privacy_t */
   BLE_GAP_OPT_SCAN_REQ_REPORT,                  /**< Scan request report. @ref ble_gap_opt_scan_req_report_t */
-  BLE_GAP_OPT_COMPAT_MODE                       /**< Compatibility mode. @ref ble_gap_opt_compat_mode_t */
+  BLE_GAP_OPT_COMPAT_MODE_1,                    /**< Compatibility mode. @ref ble_gap_opt_compat_mode_1_t */
+  BLE_GAP_OPT_COMPAT_MODE_2,                    /**< Compatibility mode. @ref ble_gap_opt_compat_mode_2_t */
+  BLE_GAP_OPT_AUTH_PAYLOAD_TIMEOUT,             /**< Set Authenticated payload timeout. @ref ble_gap_opt_auth_payload_timeout_t */
+  BLE_GAP_OPT_SLAVE_LATENCY_DISABLE,            /**< Disable slave latency. @ref ble_gap_opt_slave_latency_disable_t */
+};
+
+/**@brief GAP Configuration IDs.
+ *
+ * IDs that uniquely identify a GAP configuration.
+ */
+enum BLE_GAP_CFGS
+{
+  BLE_GAP_CFG_ROLE_COUNT = BLE_GAP_CFG_BASE,  /**< Role count configuration. */
+  BLE_GAP_CFG_DEVICE_NAME,                    /**< Device name configuration. */
 };
 
 /** @} */
@@ -141,7 +160,9 @@ enum BLE_GAP_OPTS
 #define BLE_ERROR_GAP_UUID_LIST_MISMATCH            (NRF_GAP_ERR_BASE + 0x000)  /**< UUID list does not contain an integral number of UUIDs. */
 #define BLE_ERROR_GAP_DISCOVERABLE_WITH_WHITELIST   (NRF_GAP_ERR_BASE + 0x001)  /**< Use of Whitelist not permitted with discoverable advertising. */
 #define BLE_ERROR_GAP_INVALID_BLE_ADDR              (NRF_GAP_ERR_BASE + 0x002)  /**< The upper two bits of the address do not correspond to the specified address type. */
-#define BLE_ERROR_GAP_WHITELIST_IN_USE              (NRF_GAP_ERR_BASE + 0x003)  /**< Attempt to overwrite the whitelist while already in use by another operation. */
+#define BLE_ERROR_GAP_WHITELIST_IN_USE              (NRF_GAP_ERR_BASE + 0x003)  /**< Attempt to modify the whitelist while already in use by another operation. */
+#define BLE_ERROR_GAP_DEVICE_IDENTITIES_IN_USE      (NRF_GAP_ERR_BASE + 0x004)  /**< Attempt to modify the device identity list while already in use by another operation. */
+#define BLE_ERROR_GAP_DEVICE_IDENTITIES_DUPLICATE   (NRF_GAP_ERR_BASE + 0x005)  /**< The device identity list contains entries with duplicate identity addresses. */
 /**@} */
 
 
@@ -160,28 +181,34 @@ enum BLE_GAP_OPTS
 #define BLE_GAP_TIMEOUT_SRC_SECURITY_REQUEST           0x01 /**< Security request timeout. */
 #define BLE_GAP_TIMEOUT_SRC_SCAN                       0x02 /**< Scanning timeout. */
 #define BLE_GAP_TIMEOUT_SRC_CONN                       0x03 /**< Connection timeout. */
+#define BLE_GAP_TIMEOUT_SRC_AUTH_PAYLOAD               0x04 /**< Authenticated payload timeout. */
 /**@} */
 
 
 /**@defgroup BLE_GAP_ADDR_TYPES GAP Address types
  * @{ */
 #define BLE_GAP_ADDR_TYPE_PUBLIC                        0x00 /**< Public address. */
-#define BLE_GAP_ADDR_TYPE_RANDOM_STATIC                 0x01 /**< Random Static address. */
-#define BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_RESOLVABLE     0x02 /**< Private Resolvable address. */
-#define BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_NON_RESOLVABLE 0x03 /**< Private Non-Resolvable address. */
+#define BLE_GAP_ADDR_TYPE_RANDOM_STATIC                 0x01 /**< Random static address. */
+#define BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_RESOLVABLE     0x02 /**< Random private resolvable address. */
+#define BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_NON_RESOLVABLE 0x03 /**< Random private non-resolvable address. */
 /**@} */
 
-/**@defgroup BLE_GAP_ADDR_CYCLE_MODES GAP Address cycle modes
- * @{ */
-#define BLE_GAP_ADDR_CYCLE_MODE_NONE      0x00 /**< Set addresses directly, no automatic address cycling. */
-#define BLE_GAP_ADDR_CYCLE_MODE_AUTO      0x01 /**< Automatically generate and update private addresses. */
-/** @} */
 
-/**@brief The default interval in seconds at which a private address is refreshed when address cycle mode is @ref BLE_GAP_ADDR_CYCLE_MODE_AUTO.  */
-#define BLE_GAP_DEFAULT_PRIVATE_ADDR_CYCLE_INTERVAL_S (60 * 15)
+/**@brief The default interval in seconds at which a private address is refreshed.  */
+#define BLE_GAP_DEFAULT_PRIVATE_ADDR_CYCLE_INTERVAL_S (900) /* 15 minutes. */
+/**@brief The maximum interval in seconds at which a private address can be refreshed.  */
+#define BLE_GAP_MAX_PRIVATE_ADDR_CYCLE_INTERVAL_S     (41400) /* 11 hours 30 minutes. */
+
 
 /** @brief BLE address length. */
-#define BLE_GAP_ADDR_LEN            6
+#define BLE_GAP_ADDR_LEN (6)
+
+
+/**@defgroup BLE_GAP_PRIVACY_MODES Privacy modes
+ * @{ */
+#define BLE_GAP_PRIVACY_MODE_OFF                       0x00 /**< Device will send and accept its identity address for its own address. */
+#define BLE_GAP_PRIVACY_MODE_DEVICE_PRIVACY            0x01 /**< Device will send and accept only private addresses for its own address. */
+/**@} */
 
 
 /**@defgroup BLE_GAP_AD_TYPE_DEFINITIONS GAP Advertising and Scan Response Data format
@@ -216,6 +243,8 @@ enum BLE_GAP_OPTS
 #define BLE_GAP_AD_TYPE_SIMPLE_PAIRING_RANDOMIZER_R256      0x1E /**< Simple Pairing Randomizer R-256. */
 #define BLE_GAP_AD_TYPE_SERVICE_DATA_32BIT_UUID             0x20 /**< Service Data - 32-bit UUID. */
 #define BLE_GAP_AD_TYPE_SERVICE_DATA_128BIT_UUID            0x21 /**< Service Data - 128-bit UUID. */
+#define BLE_GAP_AD_TYPE_LESC_CONFIRMATION_VALUE             0x22 /**< LE Secure Connections Confirmation Value */
+#define BLE_GAP_AD_TYPE_LESC_RANDOM_VALUE                   0x23 /**< LE Secure Connections Random Value */
 #define BLE_GAP_AD_TYPE_URI                                 0x24 /**< URI */
 #define BLE_GAP_AD_TYPE_3D_INFORMATION_DATA                 0x3D /**< 3D Information Data. */
 #define BLE_GAP_AD_TYPE_MANUFACTURER_SPECIFIC_DATA          0xFF /**< Manufacturer Specific Data. */
@@ -264,7 +293,7 @@ enum BLE_GAP_OPTS
 
 
 /**@brief Maximum size of advertising data in octets. */
-#define  BLE_GAP_ADV_MAX_SIZE           31
+#define BLE_GAP_ADV_MAX_SIZE            (31)
 
 
 /**@defgroup BLE_GAP_ADV_TYPES GAP Advertising types
@@ -287,8 +316,8 @@ enum BLE_GAP_OPTS
 
 /**@defgroup BLE_GAP_ADV_TIMEOUT_VALUES GAP Advertising timeout values
  * @{ */
-#define BLE_GAP_ADV_TIMEOUT_LIMITED_MAX      180 /**< Maximum advertising time in limited discoverable mode (TGAP(lim_adv_timeout) = 180s). */
-#define BLE_GAP_ADV_TIMEOUT_GENERAL_UNLIMITED  0 /**< Unlimited advertising in general discoverable mode. */
+#define BLE_GAP_ADV_TIMEOUT_LIMITED_MAX       (180) /**< Maximum advertising time in limited discoverable mode (TGAP(lim_adv_timeout) = 180 s). */
+#define BLE_GAP_ADV_TIMEOUT_GENERAL_UNLIMITED (0)   /**< Unlimited advertising in general discoverable mode. */
 /**@} */
 
 
@@ -299,6 +328,7 @@ enum BLE_GAP_OPTS
 #define BLE_GAP_DISC_MODE_GENERAL           0x02   /**< General Discovery Mode. */
 /**@} */
 
+
 /**@defgroup BLE_GAP_IO_CAPS GAP IO Capabilities
  * @{ */
 #define BLE_GAP_IO_CAPS_DISPLAY_ONLY      0x00   /**< Display Only. */
@@ -308,12 +338,14 @@ enum BLE_GAP_OPTS
 #define BLE_GAP_IO_CAPS_KEYBOARD_DISPLAY  0x04   /**< Keyboard and Display. */
 /**@} */
 
+
 /**@defgroup BLE_GAP_AUTH_KEY_TYPES GAP Authentication Key Types
  * @{ */
 #define BLE_GAP_AUTH_KEY_TYPE_NONE        0x00   /**< No key (may be used to reject). */
 #define BLE_GAP_AUTH_KEY_TYPE_PASSKEY     0x01   /**< 6-digit Passkey. */
 #define BLE_GAP_AUTH_KEY_TYPE_OOB         0x02   /**< Out Of Band data. */
 /**@} */
+
 
 /**@defgroup BLE_GAP_KP_NOT_TYPES GAP Keypress Notification Types
  * @{ */
@@ -324,6 +356,7 @@ enum BLE_GAP_OPTS
 #define BLE_GAP_KP_NOT_TYPE_PASSKEY_END         0x04   /**< Passkey entry completed. */
 /**@} */
 
+
 /**@defgroup BLE_GAP_SEC_STATUS GAP Security status
  * @{ */
 #define BLE_GAP_SEC_STATUS_SUCCESS                0x00  /**< Procedure completed with success. */
@@ -331,7 +364,7 @@ enum BLE_GAP_OPTS
 #define BLE_GAP_SEC_STATUS_PDU_INVALID            0x02  /**< Invalid PDU received. */
 #define BLE_GAP_SEC_STATUS_RFU_RANGE1_BEGIN       0x03  /**< Reserved for Future Use range #1 begin. */
 #define BLE_GAP_SEC_STATUS_RFU_RANGE1_END         0x80  /**< Reserved for Future Use range #1 end. */
-#define BLE_GAP_SEC_STATUS_PASSKEY_ENTRY_FAILED   0x81  /**< Passkey entry failed (user cancelled or other). */
+#define BLE_GAP_SEC_STATUS_PASSKEY_ENTRY_FAILED   0x81  /**< Passkey entry failed (user canceled or other). */
 #define BLE_GAP_SEC_STATUS_OOB_NOT_AVAILABLE      0x82  /**< Out of Band Key not available. */
 #define BLE_GAP_SEC_STATUS_AUTH_REQ               0x83  /**< Authentication requirements not met. */
 #define BLE_GAP_SEC_STATUS_CONFIRM_VALUE          0x84  /**< Confirm value failed. */
@@ -349,11 +382,13 @@ enum BLE_GAP_OPTS
 #define BLE_GAP_SEC_STATUS_RFU_RANGE2_END         0xFF  /**< Reserved for Future Use range #2 end. */
 /**@} */
 
+
 /**@defgroup BLE_GAP_SEC_STATUS_SOURCES GAP Security status sources
  * @{ */
 #define BLE_GAP_SEC_STATUS_SOURCE_LOCAL           0x00  /**< Local failure. */
 #define BLE_GAP_SEC_STATUS_SOURCE_REMOTE          0x01  /**< Remote failure. */
 /**@} */
+
 
 /**@defgroup BLE_GAP_CP_LIMITS GAP Connection Parameters Limits
  * @{ */
@@ -370,11 +405,17 @@ enum BLE_GAP_OPTS
 /**@} */
 
 
-/**@brief GAP device name maximum length. */
-#define BLE_GAP_DEVNAME_MAX_LEN           31
+/**@defgroup BLE_GAP_DEVNAME GAP device name defines.
+ * @{ */
+#define BLE_GAP_DEVNAME_DEFAULT                  "nRF5x" /**< Default device name value. */
+#define BLE_GAP_DEVNAME_DEFAULT_LEN              31      /**< Default number of octets in device name. */
+#define BLE_GAP_DEVNAME_MAX_LEN                  248     /**< Maximum number of octets in device name. */
+/**@} */
+
 
 /**@brief Disable RSSI events for connections */
-#define BLE_GAP_RSSI_THRESHOLD_INVALID    0xFF
+#define BLE_GAP_RSSI_THRESHOLD_INVALID 0xFF
+
 
 /**@defgroup BLE_GAP_CONN_SEC_MODE_SET_MACROS GAP attribute security requirement setters
  *
@@ -400,25 +441,56 @@ enum BLE_GAP_OPTS
 /**@brief GAP Security Random Number Length. */
 #define BLE_GAP_SEC_RAND_LEN 8
 
+
 /**@brief GAP Security Key Length. */
 #define BLE_GAP_SEC_KEY_LEN 16
+
 
 /**@brief GAP LE Secure Connections Elliptic Curve Diffie-Hellman P-256 Public Key Length. */
 #define BLE_GAP_LESC_P256_PK_LEN 64
 
+
 /**@brief GAP LE Secure Connections Elliptic Curve Diffie-Hellman DHKey Length. */
 #define BLE_GAP_LESC_DHKEY_LEN   32
+
 
 /**@brief GAP Passkey Length. */
 #define BLE_GAP_PASSKEY_LEN 6
 
-/**@brief Maximum amount of addresses in a whitelist. */
+
+/**@brief Maximum amount of addresses in the whitelist. */
 #define BLE_GAP_WHITELIST_ADDR_MAX_COUNT (8)
 
-/**@brief Maximum amount of IRKs in a whitelist.
- * @note  The number of IRKs is limited to 8, even if the hardware supports more.
- */
-#define BLE_GAP_WHITELIST_IRK_MAX_COUNT (8)
+
+/**@brief Maximum amount of identities in the device identities list. */
+#define BLE_GAP_DEVICE_IDENTITIES_MAX_COUNT (8)
+
+
+/**@brief Default connection count for a configuration. */
+#define BLE_GAP_CONN_COUNT_DEFAULT (1)
+
+
+/**@defgroup BLE_GAP_EVENT_LENGTH GAP event length defines.
+ * @{ */
+#define BLE_GAP_EVENT_LENGTH_MIN     (2)  /**< Minimum event length, in 1.25 ms units. */
+#define BLE_GAP_EVENT_LENGTH_DEFAULT (3)  /**< Default event length, in 1.25 ms units. */
+/**@} */
+
+
+/**@defgroup BLE_GAP_ROLE_COUNT GAP concurrent connection count defines.
+ * @{ */
+#define BLE_GAP_ROLE_COUNT_PERIPH_DEFAULT      (1)   /**< Default maximum number of connections concurrently acting as peripherals. */
+#define BLE_GAP_ROLE_COUNT_CENTRAL_DEFAULT     (3)   /**< Default maximum number of connections concurrently acting as centrals. */
+#define BLE_GAP_ROLE_COUNT_CENTRAL_SEC_DEFAULT (1)   /**< Default number of SMP instances shared between all connections acting as centrals. */
+#define BLE_GAP_ROLE_COUNT_COMBINED_MAX        (20)  /**< Maximum supported number of concurrent connections in the peripheral and central roles combined. */
+/**@} */
+
+
+
+
+/**@brief Automatic data length parameter. */
+#define BLE_GAP_DATA_LENGTH_AUTO 0
+
 
 /**@defgroup GAP_SEC_MODES GAP Security Modes
  * @{ */
@@ -426,24 +498,17 @@ enum BLE_GAP_OPTS
 /**@} */
 /** @} */
 
+
 /**@addtogroup BLE_GAP_STRUCTURES Structures
  * @{ */
-
-/**
- * @brief BLE GAP initialization parameters.
- */
-typedef struct
-{
-  uint8_t                   periph_conn_count;  /**< Number of connections acting as a peripheral  */
-  uint8_t                   central_conn_count; /**< Number of connections acting as a central */
-  uint8_t                   central_sec_count;  /**< Number of SMP instances for all connections acting as a central. */
-} ble_gap_enable_params_t;
 
 /**@brief Bluetooth Low Energy address. */
 typedef struct
 {
-  uint8_t addr_type;                    /**< See @ref BLE_GAP_ADDR_TYPES. */
-  uint8_t addr[BLE_GAP_ADDR_LEN];       /**< 48-bit address, LSB format. */
+  uint8_t addr_id_peer : 1;       /**< Only valid for peer addresses.
+                                       Reference to peer in device identities list (as set with @ref sd_ble_gap_device_identities_set) when peer is using privacy. */
+  uint8_t addr_type    : 7;       /**< See @ref BLE_GAP_ADDR_TYPES. */
+  uint8_t addr[BLE_GAP_ADDR_LEN]; /**< 48-bit address, LSB format. */
 } ble_gap_addr_t;
 
 
@@ -452,11 +517,11 @@ typedef struct
  * @note  When ble_conn_params_t is received in an event, both min_conn_interval and
  *        max_conn_interval will be equal to the connection interval set by the central.
  *
- * @note If both conn_sup_timeout and max_conn_interval are specified, then the following constraint applies:
- *       conn_sup_timeout * 4 > (1 + slave_latency) * max_conn_interval
- *       that corresponds to the following Bluetooth Spec requirement:
- *       The Supervision_Timeout in milliseconds shall be larger than
- *       (1 + Conn_Latency) * Conn_Interval_Max * 2, where Conn_Interval_Max is given in milliseconds.
+ * @note  If both conn_sup_timeout and max_conn_interval are specified, then the following constraint applies:
+ *        conn_sup_timeout * 4 > (1 + slave_latency) * max_conn_interval
+ *        that corresponds to the following Bluetooth Spec requirement:
+ *        The Supervision_Timeout in milliseconds shall be larger than
+ *        (1 + Conn_Latency) * Conn_Interval_Max * 2, where Conn_Interval_Max is given in milliseconds.
  */
 typedef struct
 {
@@ -492,22 +557,12 @@ typedef struct
   uint8_t                 encr_key_size;      /**< Length of currently active encryption key, 7 to 16 octets (only applicable for bonding procedures). */
 } ble_gap_conn_sec_t;
 
-
 /**@brief Identity Resolving Key. */
 typedef struct
 {
   uint8_t irk[BLE_GAP_SEC_KEY_LEN];   /**< Array containing IRK. */
 } ble_gap_irk_t;
 
-
-/**@brief Whitelist structure. */
-typedef struct
-{
-  ble_gap_addr_t    **pp_addrs;        /**< Pointer to an array of device address pointers, pointing to addresses to be used in whitelist. NULL if none are given. */
-  uint8_t             addr_count;      /**< Count of device addresses in array, up to @ref BLE_GAP_WHITELIST_ADDR_MAX_COUNT. */
-  ble_gap_irk_t     **pp_irks;         /**< Pointer to an array of Identity Resolving Key (IRK) pointers, each pointing to an IRK in the whitelist. NULL if none are given. */
-  uint8_t             irk_count;       /**< Count of IRKs in array, up to @ref BLE_GAP_WHITELIST_IRK_MAX_COUNT. */
-} ble_gap_whitelist_t;
 
 /**@brief Channel mask for RF channels used in advertising. */
 typedef struct
@@ -517,14 +572,18 @@ typedef struct
   uint8_t ch_39_off : 1;  /**< Setting this bit to 1 will turn off advertising on channel 39 */
 } ble_gap_adv_ch_mask_t;
 
-/**@brief GAP advertising parameters.*/
+
+/**@brief GAP advertising parameters. */
 typedef struct
 {
   uint8_t               type;                 /**< See @ref BLE_GAP_ADV_TYPES. */
-  ble_gap_addr_t       *p_peer_addr;          /**< For @ref BLE_GAP_ADV_TYPE_ADV_DIRECT_IND mode only, known peer address. */
+  ble_gap_addr_t const *p_peer_addr;          /**< Address of a known peer.
+                                                   - When privacy is enabled and the local device use @ref BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_RESOLVABLE addresses, the device identity list is searched for a matching
+                                                     entry. If the local IRK for that device identity is set, the local IRK for that device will be used to generate the advertiser address field in the advertise packet.
+                                                   - If type is @ref BLE_GAP_ADV_TYPE_ADV_DIRECT_IND, this must be set to the targeted initiator. If the initiator is in the device identity list,
+                                                     the peer IRK for that device will be used to generate the initiator address field in the ADV_DIRECT_IND packet. */
   uint8_t               fp;                   /**< Filter Policy, see @ref BLE_GAP_ADV_FILTER_POLICIES. */
-  ble_gap_whitelist_t  *p_whitelist;          /**< Pointer to whitelist, NULL if no whitelist or the current active whitelist is to be used. */
-  uint16_t              interval;             /**< Advertising interval between 0x0020 and 0x4000 in 0.625 ms units (20ms to 10.24s), see @ref BLE_GAP_ADV_INTERVALS.
+  uint16_t              interval;             /**< Advertising interval between 0x0020 and 0x4000 in 0.625 ms units (20 ms to 10.24 s), see @ref BLE_GAP_ADV_INTERVALS.
                                                    - If type equals @ref BLE_GAP_ADV_TYPE_ADV_DIRECT_IND, this parameter must be set to 0 for high duty cycle directed advertising.
                                                    - If type equals @ref BLE_GAP_ADV_TYPE_ADV_DIRECT_IND, set @ref BLE_GAP_ADV_INTERVAL_MIN <= interval <= @ref BLE_GAP_ADV_INTERVAL_MAX for low duty cycle advertising.*/
   uint16_t              timeout;              /**< Advertising timeout between 0x0001 and 0x3FFF in seconds, 0x0000 disables timeout. See also @ref BLE_GAP_ADV_TIMEOUT_VALUES. If type equals @ref BLE_GAP_ADV_TYPE_ADV_DIRECT_IND, this parameter must be set to 0 for High duty cycle directed advertising. */
@@ -535,13 +594,40 @@ typedef struct
 /**@brief GAP scanning parameters. */
 typedef struct
 {
-  uint8_t                 active    : 1;        /**< If 1, perform active scanning (scan requests). */
-  uint8_t                 selective : 1;        /**< If 1, ignore unknown devices (non whitelisted). */
-  ble_gap_whitelist_t *   p_whitelist;          /**< Pointer to whitelist, NULL if no whitelist or the current active whitelist is to be used. */
-  uint16_t                interval;             /**< Scan interval between 0x0004 and 0x4000 in 0.625ms units (2.5ms to 10.24s). */
-  uint16_t                window;               /**< Scan window between 0x0004 and 0x4000 in 0.625ms units (2.5ms to 10.24s). */
-  uint16_t                timeout;              /**< Scan timeout between 0x0001 and 0xFFFF in seconds, 0x0000 disables timeout. */
+  uint8_t  active         : 1;  /**< If 1, perform active scanning (scan requests). */
+  uint8_t  use_whitelist  : 1;  /**< If 1, filter advertisers using current active whitelist. */
+  uint8_t  adv_dir_report : 1;  /**< If 1, also report directed advertisements where the initiator field is set to a private resolvable address,
+                                     even if the address did not resolve to an entry in the device identity list. A report will be generated
+                                     even if the peer is not in the whitelist. */
+  uint16_t interval;            /**< Scan interval between 0x0004 and 0x4000 in 0.625 ms units (2.5 ms to 10.24 s). */
+  uint16_t window;              /**< Scan window between 0x0004 and 0x4000 in 0.625 ms units (2.5 ms to 10.24 s). */
+  uint16_t timeout;             /**< Scan timeout between 0x0001 and 0xFFFF in seconds, 0x0000 disables timeout. */
 } ble_gap_scan_params_t;
+
+
+/**@brief Device Privacy.
+ *
+ *        The privacy feature provides a way for the device to avoid being tracked over a period of time.
+ *        The privacy feature, when enabled, hides the local device identity and replaces it with a private address
+ *        that is automatically refreshed at a specified interval.
+ *
+ *        If a device still wants to be recognized by other peers, it needs to share it's Identity Resolving Key (IRK).
+ *        With this key, a device can generate a random private address that can only be recognized by peers in possession of that key,
+ *        and devices can establish connections without revealing their real identities.
+ *
+ * @note  If the device IRK is updated, the new IRK becomes the one to be distributed in all
+ *        bonding procedures performed after @ref sd_ble_gap_privacy_set returns.
+ *        The IRK distributed during bonding procedure is the device IRK that is active when @ref sd_ble_gap_sec_params_reply is called.
+ */
+typedef struct
+{
+  uint8_t        privacy_mode;         /**< Privacy mode, see @ref BLE_GAP_PRIVACY_MODES. Default is @ref BLE_GAP_PRIVACY_MODE_OFF. */
+  uint8_t        private_addr_type;    /**< The private address type must be either @ref BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_RESOLVABLE or @ref BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_NON_RESOLVABLE. */
+  uint16_t       private_addr_cycle_s; /**< Private address cycle interval in seconds. Providing an address cycle value of 0 will use the default value defined by @ref BLE_GAP_DEFAULT_PRIVATE_ADDR_CYCLE_INTERVAL_S. */
+  ble_gap_irk_t *p_device_irk;         /**< When used as input, pointer to IRK structure that will be used as the default IRK. If NULL, the device default IRK will be used.
+                                            When used as output, pointer to IRK structure where the current default IRK will be written to. If NULL, this argument is ignored.
+                                            By default, the default IRK is used to generate random private resolvable addresses for the local device unless instructed otherwise. */
+} ble_gap_privacy_params_t;
 
 
 /** @brief Keys that can be exchanged during a bonding procedure. */
@@ -562,7 +648,11 @@ typedef struct
   uint8_t               lesc      : 1;             /**< Enable LE Secure Connection pairing. */
   uint8_t               keypress  : 1;             /**< Enable generation of keypress notifications. */
   uint8_t               io_caps   : 3;             /**< IO capabilities, see @ref BLE_GAP_IO_CAPS. */
-  uint8_t               oob       : 1;             /**< Out Of Band data available. */
+  uint8_t               oob       : 1;             /**< The OOB data flag.
+                                                        - In LE legacy pairing, this flag is set if a device has out of band authentication data.
+                                                          The OOB method is used if both of the devices have out of band authentication data.
+                                                        - In LE Secure Connections pairing, this flag is set if a device has the peer device's out of band authentication data.
+                                                          The OOB method is used if at least one device has the peer device's OOB data available. */
   uint8_t               min_key_size;              /**< Minimum encryption key size in octets between 7 and 16. If 0 then not applicable in this instance. */
   uint8_t               max_key_size;              /**< Maximum encryption key size in octets between min_key_size and 16. */
   ble_gap_sec_kdist_t   kdist_own;                 /**< Key distribution bitmap: keys that the local device will distribute. */
@@ -594,17 +684,20 @@ typedef struct
   uint8_t   csrk[BLE_GAP_SEC_KEY_LEN];        /**< Connection Signature Resolving Key. */
 } ble_gap_sign_info_t;
 
+
 /**@brief GAP LE Secure Connections P-256 Public Key. */
 typedef struct
 {
   uint8_t   pk[BLE_GAP_LESC_P256_PK_LEN];        /**< LE Secure Connections Elliptic Curve Diffie-Hellman P-256 Public Key. Stored in the standard SMP protocol format: {X,Y} both in little-endian. */
 } ble_gap_lesc_p256_pk_t;
 
+
 /**@brief GAP LE Secure Connections DHKey. */
 typedef struct
 {
   uint8_t   key[BLE_GAP_LESC_DHKEY_LEN];        /**< LE Secure Connections Elliptic Curve Diffie-Hellman Key. Stored in little-endian. */
 } ble_gap_lesc_dhkey_t;
+
 
 /**@brief GAP LE Secure Connections OOB data. */
 typedef struct
@@ -614,14 +707,13 @@ typedef struct
   uint8_t         c[BLE_GAP_SEC_KEY_LEN];        /**< Confirm Value. */
 } ble_gap_lesc_oob_data_t;
 
+
 /**@brief Event structure for @ref BLE_GAP_EVT_CONNECTED. */
 typedef struct
 {
-  ble_gap_addr_t        peer_addr;              /**< Bluetooth address of the peer device. */
-  ble_gap_addr_t        own_addr;               /**< Bluetooth address of the local device used during connection setup. */
+  ble_gap_addr_t        peer_addr;              /**< Bluetooth address of the peer device. If the peer_addr resolved: @ref ble_gap_addr_t::addr_id_peer is set to 1
+                                                     and the address is the device's identity address. */
   uint8_t               role;                   /**< BLE role for this connection, see @ref BLE_GAP_ROLES */
-  uint8_t               irk_match :1;           /**< If 1, peer device's address resolved using an IRK. */
-  uint8_t               irk_match_idx  :7;      /**< Index in IRK list where the address was matched. */
   ble_gap_conn_params_t conn_params;            /**< GAP Connection Parameters. */
 } ble_gap_evt_connected_t;
 
@@ -690,7 +782,7 @@ typedef struct
 
 
 /**@brief Security levels supported.
- * @note See Bluetooth Specification Version 4.2 Volume 3, Part C, Chapter 10, Section 10.2.1.
+ * @note  See Bluetooth Specification Version 4.2 Volume 3, Part C, Chapter 10, Section 10.2.1.
 */
 typedef struct
 {
@@ -712,8 +804,8 @@ typedef struct
 /**@brief Identity Key. */
 typedef struct
 {
-  ble_gap_irk_t         id_info;              /**< Identity Information. */
-  ble_gap_addr_t        id_addr_info;         /**< Identity Address Information. */
+  ble_gap_irk_t         id_info;              /**< Identity Resolving Key. */
+  ble_gap_addr_t        id_addr_info;         /**< Identity Address. */
 } ble_gap_id_key_t;
 
 
@@ -734,6 +826,25 @@ typedef struct
   ble_gap_sec_keys_t            keys_own;     /**< Keys distributed by the local device. For LE Secure Connections the encryption key will be generated locally and will always be stored if bonding. */
   ble_gap_sec_keys_t            keys_peer;    /**< Keys distributed by the remote device. For LE Secure Connections, p_enc_key must always be NULL. */
 } ble_gap_sec_keyset_t;
+
+
+/**@brief Data Length Update Procedure parameters. */
+typedef struct
+{
+  uint16_t max_tx_octets;   /**< Maximum number of payload octets that a Controller supports for transmission of a single Link Layer Data Channel PDU. */
+  uint16_t max_rx_octets;   /**< Maximum number of payload octets that a Controller supports for reception of a single Link Layer Data Channel PDU. */
+  uint16_t max_tx_time_us;  /**< Maximum time, in microseconds, that a Controller supports for transmission of a single Link Layer Data Channel PDU. */
+  uint16_t max_rx_time_us;  /**< Maximum time, in microseconds, that a Controller supports for reception of a single Link Layer Data Channel PDU. */
+} ble_gap_data_length_params_t;
+
+
+/**@brief Data Length Update Procedure local limitation. */
+typedef struct
+{
+  uint16_t tx_payload_limited_octets; /**< If > 0, the requested TX packet length is too long by this many octets. */
+  uint16_t rx_payload_limited_octets; /**< If > 0, the requested RX packet length is too long by this many octets. */
+  uint16_t tx_rx_time_limited_us;     /**< If > 0, the requested combination of TX and RX packet lengths is too long by this many microseconds. */
+} ble_gap_data_length_limitation_t;
 
 
 /**@brief Event structure for @ref BLE_GAP_EVT_AUTH_STATUS. */
@@ -773,7 +884,10 @@ typedef struct
 /**@brief Event structure for @ref BLE_GAP_EVT_ADV_REPORT. */
 typedef struct
 {
-  ble_gap_addr_t peer_addr;                     /**< Bluetooth address of the peer device. */
+  ble_gap_addr_t peer_addr;                     /**< Bluetooth address of the peer device. If the peer_addr resolved: @ref ble_gap_addr_t::addr_id_peer is set to 1
+                                                     and the address is the device's identity address. */
+  ble_gap_addr_t direct_addr;                   /**< Set when the scanner is unable to resolve the private resolvable address of the initiator
+                                                     field of a directed advertisement packet and the scanner has been enabled to report this in @ref ble_gap_scan_params_t::adv_dir_report. */
   int8_t         rssi;                          /**< Received Signal Strength Indication in dBm. */
   uint8_t        scan_rsp : 1;                  /**< If 1, the report corresponds to a scan response and the type field may be ignored. */
   uint8_t        type     : 2;                  /**< See @ref BLE_GAP_ADV_TYPES. Only valid if the scan_rsp field is 0. */
@@ -803,9 +917,21 @@ typedef struct
 typedef struct
 {
   int8_t                  rssi;              /**< Received Signal Strength Indication in dBm. */
-  ble_gap_addr_t          peer_addr;         /**< Bluetooth address of the peer device. */
+  ble_gap_addr_t          peer_addr;         /**< Bluetooth address of the peer device. If the peer_addr resolved: @ref ble_gap_addr_t::addr_id_peer is set to 1
+                                                  and the address is the device's identity address. */
 } ble_gap_evt_scan_req_report_t;
 
+/**@brief Event structure for @ref BLE_GAP_EVT_DATA_LENGTH_UPDATE_REQUEST. */
+typedef struct
+{
+  ble_gap_data_length_params_t peer_params; /**< Peer data length parameters. */
+} ble_gap_evt_data_length_update_request_t;
+
+/**@brief Event structure for @ref BLE_GAP_EVT_DATA_LENGTH_UPDATE. */
+typedef struct
+{
+  ble_gap_data_length_params_t effective_params;  /**< The effective data length parameters. */
+} ble_gap_evt_data_length_update_t;
 
 
 /**@brief GAP event structure. */
@@ -831,9 +957,93 @@ typedef struct
     ble_gap_evt_sec_request_t                 sec_request;                  /**< Security Request Event Parameters. */
     ble_gap_evt_conn_param_update_request_t   conn_param_update_request;    /**< Connection Parameter Update Parameters. */
     ble_gap_evt_scan_req_report_t             scan_req_report;              /**< Scan Request Report parameters. */
+    ble_gap_evt_data_length_update_request_t  data_length_update_request;   /**< Data Length Update Request Event Parameters. */
+    ble_gap_evt_data_length_update_t          data_length_update;           /**< Data Length Update Event Parameters. */
   } params;                                                                 /**< Event Parameters. */
-
 } ble_gap_evt_t;
+
+
+/**
+ * @brief BLE GAP connection configuration parameters, set with @ref sd_ble_cfg_set.
+ *
+ * @retval ::NRF_ERROR_CONN_COUNT     The connection count for the connection configurations is zero.
+ * @retval ::NRF_ERROR_INVALID_PARAM  One or more of the following is true:
+ *                                    - The sum of conn_count for all connection configurations combined exceeds UINT8_MAX.
+ *                                    - The event length is smaller than @ref BLE_GAP_EVENT_LENGTH_MIN.
+ */
+typedef struct
+{
+  uint8_t  conn_count;     /**< The number of concurrent connections the application can create with this configuration.
+                                The default and minimum value is @ref BLE_GAP_CONN_COUNT_DEFAULT. */
+  uint16_t event_length;   /**< The time set aside for this connection on every connection interval in 1.25 ms units.
+                                The default value is @ref BLE_GAP_EVENT_LENGTH_DEFAULT, the minimum value is @ref BLE_GAP_EVENT_LENGTH_MIN.
+                                The event length and the connection interval are the primary parameters
+                                for setting the throughput of a connection.
+                                See the SoftDevice Specification for details on throughput. */
+} ble_gap_conn_cfg_t;
+
+
+/**
+ * @brief Configuration of maximum concurrent connections in the different connected roles, set with
+ * @ref sd_ble_cfg_set.
+ *
+ * @retval ::NRF_ERROR_CONN_COUNT     The sum of periph_role_count and central_role_count is too
+ *                                    large. The maximum supported sum of concurrent connections is
+ *                                    @ref BLE_GAP_ROLE_COUNT_COMBINED_MAX.
+ * @retval ::NRF_ERROR_INVALID_PARAM  central_sec_count is larger than central_role_count.
+ */
+typedef struct
+{
+  uint8_t periph_role_count;  /**< Maximum number of connections concurrently acting as a peripheral. Default value is @ref BLE_GAP_ROLE_COUNT_PERIPH_DEFAULT. */
+  uint8_t central_role_count; /**< Maximum number of connections concurrently acting as a central. Default value is @ref BLE_GAP_ROLE_COUNT_CENTRAL_DEFAULT. */
+  uint8_t central_sec_count;  /**< Number of SMP instances shared between all connections acting as a central. Default value is @ref BLE_GAP_ROLE_COUNT_CENTRAL_SEC_DEFAULT. */
+} ble_gap_cfg_role_count_t;
+
+
+/**
+ * @brief Device name and its properties, set with @ref sd_ble_cfg_set.
+ *
+ * @note  If the device name is not configured, the default device name will be @ref
+ *        BLE_GAP_DEVNAME_DEFAULT, the maximum device name length will be @ref
+ *        BLE_GAP_DEVNAME_DEFAULT_LEN, vloc will be set to @ref BLE_GATTS_VLOC_STACK and the device name
+ *        will have no write access.
+ *
+ * @note  If @ref max_len is more than @ref BLE_GAP_DEVNAME_DEFAULT_LEN and vloc is set to @ref BLE_GATTS_VLOC_STACK,
+ *        the attribute table size must be increased to have room for the longer device name (see
+ *        @ref sd_ble_cfg_set and @ref ble_gatts_cfg_attr_tab_size_t).
+ *
+ * @note  If vloc is @ref BLE_GATTS_VLOC_STACK :
+ *        - p_value must point to non-volatile memory (flash) or be NULL.
+ *        - If p_value is NULL, the device name will initially be empty.
+ *
+ * @note  If vloc is @ref BLE_GATTS_VLOC_USER :
+ *        - p_value cannot be NULL.
+ *        - If the device name is writable, p_value must point to volatile memory (RAM).
+ *
+ * @retval ::NRF_ERROR_INVALID_PARAM  One or more of the following is true:
+ *                                    - Invalid device name location (vloc).
+ *                                    - Invalid device name security mode.
+ * @retval ::NRF_ERROR_INVALID_LENGTH One or more of the following is true:
+ *                                    - The device name length is invalid (must be between 0 and @ref BLE_GAP_DEVNAME_MAX_LEN).
+ *                                    - The device name length is too long for the given Attribute Table.
+ * @retval ::NRF_ERROR_NOT_SUPPORTED  Device name security mode is not supported.
+ */
+typedef struct
+{
+  ble_gap_conn_sec_mode_t  write_perm;   /**< Write permissions. */
+  uint8_t                  vloc:2;       /**< Value location, see @ref BLE_GATTS_VLOCS.*/
+  uint8_t                 *p_value;      /**< Pointer to where the value (device name) is stored or will be stored. */
+  uint16_t                 current_len;  /**< Current length in bytes of the memory pointed to by p_value.*/
+  uint16_t                 max_len;      /**< Maximum length in bytes of the memory pointed to by p_value.*/
+} ble_gap_cfg_device_name_t;
+
+
+/**@brief Configuration structure for GAP configurations. */
+typedef union
+{
+  ble_gap_cfg_role_count_t  role_count_cfg;  /**< Role count configuration, cfg_id is @ref BLE_GAP_CFG_ROLE_COUNT. */
+  ble_gap_cfg_device_name_t device_name_cfg; /**< Device name configuration, cfg_id is @ref BLE_GAP_CFG_DEVICE_NAME. */
+} ble_gap_cfg_t;
 
 
 /**@brief Channel Map option.
@@ -893,50 +1103,38 @@ typedef struct
   uint16_t * p_actual_latency;                  /**< Pointer to storage for the actual local connection latency (can be set to NULL to skip return value). */
 } ble_gap_opt_local_conn_latency_t;
 
+/**@brief Disable slave latency
+ *
+ * Used with @ref sd_ble_opt_set to temporarily disable slave latency of a peripheral connection (see @ref ble_gap_conn_params_t::slave_latency). And to re-enable it again.
+ * When disabled, the peripheral will ignore the slave_latency set by the central.
+ *
+ * @note  Shall only be called on peripheral links.
+ *
+ * @retval ::NRF_SUCCESS Set successfully.
+ * @retval ::NRF_ERROR_NOT_SUPPORTED Get is not supported.
+ * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid connection handle parameter.
+ */
+typedef struct
+{
+  uint16_t   conn_handle;    /**< Connection Handle */
+  uint8_t    disable : 1;    /**< Set to 1 to disable slave latency. Set to 0 enable it again.*/
+} ble_gap_opt_slave_latency_disable_t;
 
 /**@brief Passkey Option.
  *
  *        Structure containing the passkey to be used during pairing. This can be used with @ref
- *        sd_ble_opt_set to make the SoftDevice use a pre-programmed passkey for authentication
+ *        sd_ble_opt_set to make the SoftDevice use a preprogrammed passkey for authentication
  *        instead of generating a random one.
+ *
+ * @note  Repeated pairing attempts using the same preprogrammed passkey makes pairing vulnerable to MITM attacks.
  *
  * @note  @ref sd_ble_opt_get is not supported for this option.
  *
  */
 typedef struct
 {
-  uint8_t * p_passkey;                          /**< Pointer to 6-digit ASCII string (digit 0..9 only, no NULL termination) passkey to be used during pairing. If this is NULL, the SoftDevice will generate a random passkey if required.*/
+  uint8_t const * p_passkey;                    /**< Pointer to 6-digit ASCII string (digit 0..9 only, no NULL termination) passkey to be used during pairing. If this is NULL, the SoftDevice will generate a random passkey if required.*/
 } ble_gap_opt_passkey_t;
-
-
-/**@brief Custom Privacy Option.
- *
- *        This structure is used with both @ref sd_ble_opt_set (as input) and with
- *        @ref sd_ble_opt_get (as output).
- *
- *        Structure containing:
- *        - A pointer to an IRK to set (if input), or a place to store a read IRK (if output).
- *        - A private address refresh cycle.
- *
- * @note  The specified address cycle interval is used when the address cycle mode is
- *        @ref BLE_GAP_ADDR_CYCLE_MODE_AUTO. If 0 is given, the address will not be automatically
- *        refreshed at all. The default interval is @ref BLE_GAP_DEFAULT_PRIVATE_ADDR_CYCLE_INTERVAL_S.
- *
- * @note  If the current address cycle mode is @ref BLE_GAP_ADDR_CYCLE_MODE_AUTO, the address will immediately be
- *        refreshed when a custom privacy option is set. A new address can be generated manually by calling
- *        @ref sd_ble_gap_address_set with the same type again.
- *
- * @note  If the IRK is updated, the new IRK becomes the one to be distributed in all
- *        bonding procedures performed after @ref sd_ble_opt_set returns.
- *
- * @retval ::NRF_SUCCESS Set or read successfully.
- * @retval ::NRF_ERROR_INVALID_ADDR The pointer to IRK storage is invalid.
- */
-typedef struct
-{
-  ble_gap_irk_t * p_irk;        /**< When input: Pointer to custom IRK, or NULL to use/reset to the device's default IRK. When output: Pointer to where the current IRK is to be stored, or NULL to not read out the IRK. */
-  uint16_t        interval_s;   /**< When input: Custom private address cycle interval in seconds. When output: The current private address cycle interval. */
-} ble_gap_opt_privacy_t;
 
 
 /**@brief Scan request report option.
@@ -944,23 +1142,23 @@ typedef struct
  *        This can be used with @ref sd_ble_opt_set to make the SoftDevice send
  *        @ref BLE_GAP_EVT_SCAN_REQ_REPORT events.
  *
- *  @note   Due to the limited space reserved for scan request report events,
- *          not all received scan requests will be reported.
+ * @note  Due to the limited space reserved for scan request report events,
+ *        not all received scan requests will be reported.
  *
- *  @note   If whitelisting is used, only whitelisted requests are reported.
+ * @note  If whitelisting is used, only whitelisted requests are reported.
  *
- *  @retval ::NRF_SUCCESS Set successfully.
- *  @retval ::NRF_ERROR_INVALID_STATE When advertising is ongoing while the option is set.
+ * @retval ::NRF_SUCCESS Set successfully.
+ * @retval ::NRF_ERROR_INVALID_STATE When advertising is ongoing while the option is set.
  */
 typedef struct
 {
-   uint8_t enable : 1;                           /**< Enable scan request reports. */
+  uint8_t enable : 1; /**< Enable scan request reports. */
 } ble_gap_opt_scan_req_report_t;
 
-/**@brief Compatibility mode option.
+/**@brief Compatibility mode 1 option.
  *
  *        This can be used with @ref sd_ble_opt_set to enable and disable
- *        compatibility modes. Compatibility modes are disabled by default.
+ *        compatibility mode 1. Compatibility mode 1 is disabled by default.
  *
  *  @note  Compatibility mode 1 enables interoperability with devices that do not support
  *         a value of 0 for the WinOffset parameter in the Link Layer CONNECT_REQ packet.
@@ -970,8 +1168,51 @@ typedef struct
  */
 typedef struct
 {
-   uint8_t mode_1_enable : 1;                           /**< Enable compatibility mode 1.*/
-} ble_gap_opt_compat_mode_t;
+   uint8_t enable : 1;                           /**< Enable compatibility mode 1.*/
+} ble_gap_opt_compat_mode_1_t;
+
+/**@brief Compatibility mode 2 option.
+ *
+ *        This can be used with @ref sd_ble_opt_set to enable compatibility mode 2.
+ *        Compatibility mode 2 is disabled by default.
+ *
+ *  @note  Compatibility mode 2 enables interoperability with devices that initiate Feature exchange
+ *         and version exchange procedure in parallel.
+ *
+ *  @retval ::NRF_SUCCESS Set successfully.
+ *  @retval ::NRF_ERROR_INVALID_PARAM if enable bit is not set to 1. Currently only enabling is supported.
+ *  @retval ::NRF_ERROR_INVALID_STATE When any role is running while mode 2 is set.
+ */
+typedef struct
+{
+   uint8_t enable : 1;                           /**< Enable compatibility mode 2.*/
+} ble_gap_opt_compat_mode_2_t;
+
+
+/**@brief Authenticated payload timeout option.
+ *
+ *        This can be used with @ref sd_ble_opt_set to change the Authenticated payload timeout to a value other than the default of 8 minutes.
+ *
+ * @note  The authenticated payload timeout event ::BLE_GAP_TIMEOUT_SRC_AUTH_PAYLOAD will be generated
+ *        if auth_payload_timeout time has elapsed without receiving a packet with a valid MIC on an encrypted
+ *        link.
+ *
+ * @note  The LE ping procedure will be initiated before the timer expires to give the peer a chance
+ *        to reset the timer. In addition the stack will try to prioritize running of LE ping over other
+ *        activities to increase chances of finishing LE ping before timer expires. To avoid side-effects
+ *        on other activities, it is recommended to use high timeout values.
+ *        Recommended timeout > 2*(connInterval * (6 + connSlaveLatency)).
+ *
+ * @retval ::NRF_SUCCESS Set successfully.
+ * @retval ::NRF_ERROR_INVALID_PARAM Invalid parameter(s) supplied. auth_payload_timeout was outside of allowed range.
+ * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid connection handle parameter.
+ */
+typedef struct
+{
+  uint16_t   conn_handle;                       /**< Connection Handle */
+  uint16_t   auth_payload_timeout;              /**< Requested timeout in 10 ms unit. Maximum is 48 000 (=480 000 ms =8 min). Minimum is 1 (=10 ms). */
+} ble_gap_opt_auth_payload_timeout_t;
+
 
 /**@brief Option structure for GAP options. */
 typedef union
@@ -979,9 +1220,11 @@ typedef union
   ble_gap_opt_ch_map_t                  ch_map;                    /**< Parameters for the Channel Map option. */
   ble_gap_opt_local_conn_latency_t      local_conn_latency;        /**< Parameters for the Local connection latency option */
   ble_gap_opt_passkey_t                 passkey;                   /**< Parameters for the Passkey option.*/
-  ble_gap_opt_privacy_t                 privacy;                   /**< Parameters for the Custom privacy option. */
   ble_gap_opt_scan_req_report_t         scan_req_report;           /**< Parameters for the scan request report option.*/
-  ble_gap_opt_compat_mode_t             compat_mode;               /**< Parameters for the compatibility mode option.*/
+  ble_gap_opt_compat_mode_1_t           compat_mode_1;             /**< Parameters for the compatibility mode 1 option.*/
+  ble_gap_opt_compat_mode_2_t           compat_mode_2;             /**< Parameters for the compatibility mode 2 option.*/
+  ble_gap_opt_auth_payload_timeout_t    auth_payload_timeout;      /**< Parameters for the authenticated payload timeout option.*/
+  ble_gap_opt_slave_latency_disable_t   slave_latency_disable;     /**< Parameters for the Disable slave latency option */
 } ble_gap_opt_t;
 /**@} */
 
@@ -989,72 +1232,151 @@ typedef union
 /**@addtogroup BLE_GAP_FUNCTIONS Functions
  * @{ */
 
-/**@brief Set local Bluetooth address.
+/**@brief Set the local Bluetooth identity address.
  *
- * @note If the address cycle mode is @ref BLE_GAP_ADDR_CYCLE_MODE_AUTO, the address type is required to
- * be @ref BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_RESOLVABLE or
- * @ref BLE_GAP_ADDR_TYPE_RANDOM_PRIVATE_NON_RESOLVABLE. The given address is ignored and the
- * SoftDevice will generate a new private address automatically every
- * @ref BLE_GAP_DEFAULT_PRIVATE_ADDR_CYCLE_INTERVAL_S seconds. If this API
- * call is used again with the same parameters, the SoftDevice will immediately
- * generate a new private address to replace the current address.
+ *        The local Bluetooth identity address is the address that identifies this device to other peers.
+ *        The address type must be either @ref BLE_GAP_ADDR_TYPE_PUBLIC or @ref BLE_GAP_ADDR_TYPE_RANDOM_STATIC.
  *
- * @note If the application wishes to use a @ref BLE_GAP_ADDR_TYPE_PUBLIC or
- * @ref BLE_GAP_ADDR_TYPE_RANDOM_STATIC address, the cycle mode must be
- * @ref BLE_GAP_ADDR_CYCLE_MODE_NONE.
+ * @note  The identity address cannot be changed while advertising, scanning or creating a connection.
  *
- * @note By default the SoftDevice will set an address of type @ref BLE_GAP_ADDR_TYPE_RANDOM_STATIC upon being
- * enabled. The address is a random number populated during the IC manufacturing process and remains unchanged
- * for the lifetime of each IC.
+ * @note  This address will be distributed to the peer during bonding.
+ *        If the address changes, the address stored in the peer device will not be valid and the ability to
+ *        reconnect using the old address will be lost.
  *
- * @note If this API function is called while advertising or scanning, the softdevice will immediately update the
- * advertising or scanning address without the need to stop the procedure in the following cases:
- *   - If the previously set address is of type @ref BLE_GAP_ADDR_TYPE_PUBLIC and the new address
- *   is also of type @ref BLE_GAP_ADDR_TYPE_PUBLIC
- *   - If the previously set address is not @ref BLE_GAP_ADDR_TYPE_PUBLIC and the new address is
- *   also not @ref BLE_GAP_ADDR_TYPE_PUBLIC.
- * If the address is changed from a @ref BLE_GAP_ADDR_TYPE_PUBLIC address to another type or from
- * another type to a @ref BLE_GAP_ADDR_TYPE_PUBLIC address, the change will take effect the next
- * time an advertising or scanning procedure is started.
- *
- * @note If the address cycle mode is @ref BLE_GAP_ADDR_CYCLE_MODE_NONE and the application is
- *       using privacy, the application must take care to generate and set new private addresses
- *       periodically to comply with the Privacy specification in Bluetooth Core Spec.
+ * @note  By default the SoftDevice will set an address of type @ref BLE_GAP_ADDR_TYPE_RANDOM_STATIC upon being
+ *        enabled. The address is a random number populated during the IC manufacturing process and remains unchanged
+ *        for the lifetime of each IC.
  *
  * @mscs
  * @mmsc{@ref BLE_GAP_ADV_MSC}
  * @endmscs
  *
- * @param[in] addr_cycle_mode Address cycle mode, see @ref BLE_GAP_ADDR_CYCLE_MODES.
- * @param[in] p_addr          Pointer to address structure.
+ * @param[in] p_addr Pointer to address structure.
  *
  * @retval ::NRF_SUCCESS Address successfully set.
  * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
- * @retval ::NRF_ERROR_INVALID_PARAM Invalid parameters.
  * @retval ::BLE_ERROR_GAP_INVALID_BLE_ADDR Invalid address.
  * @retval ::NRF_ERROR_BUSY The stack is busy, process pending events and retry.
- * @retval ::NRF_ERROR_INVALID_STATE Invalid state to perform operation.
+ * @retval ::NRF_ERROR_INVALID_STATE The identity address cannot be changed while advertising,
+ *                                   scanning or creating a connection.
  */
-SVCALL(SD_BLE_GAP_ADDRESS_SET, uint32_t, sd_ble_gap_address_set(uint8_t addr_cycle_mode, ble_gap_addr_t const *p_addr));
+SVCALL(SD_BLE_GAP_ADDR_SET, uint32_t, sd_ble_gap_addr_set(ble_gap_addr_t const *p_addr));
 
 
-/**@brief Get local Bluetooth address.
+/**@brief Get local Bluetooth identity address.
+ *
+ * @note  This will always return the identity address irrespective of the privacy settings,
+ *        i.e. the address type will always be either @ref BLE_GAP_ADDR_TYPE_PUBLIC or @ref BLE_GAP_ADDR_TYPE_RANDOM_STATIC.
  *
  * @param[out] p_addr Pointer to address structure to be filled in.
  *
  * @retval ::NRF_SUCCESS Address successfully retrieved.
- * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
+ * @retval ::NRF_ERROR_INVALID_ADDR Invalid or NULL pointer supplied.
  */
-SVCALL(SD_BLE_GAP_ADDRESS_GET, uint32_t, sd_ble_gap_address_get(ble_gap_addr_t *p_addr));
+SVCALL(SD_BLE_GAP_ADDR_GET, uint32_t, sd_ble_gap_addr_get(ble_gap_addr_t *p_addr));
+
+
+/**@brief Set the active whitelist in the SoftDevice.
+ *
+ * @note  Only one whitelist can be used at a time and the whitelist is shared between the BLE roles.
+ *        The whitelist cannot be set if a BLE role is using the whitelist.
+ *
+ * @note  If an address is resolved using the information in the device identity list, then the whitelist
+ *        filter policy applies to the peer identity address and not the resolvable address sent on air.
+ *
+ * @mscs
+ * @mmsc{@ref BLE_GAP_WL_SHARE_MSC}
+ * @mmsc{@ref BLE_GAP_PRIVACY_SCAN_PRIVATE_SCAN_MSC}
+ * @endmscs
+ *
+ * @param[in] pp_wl_addrs Pointer to a whitelist of peer addresses, if NULL the whitelist will be cleared.
+ * @param[in] len         Length of the whitelist, maximum @ref BLE_GAP_WHITELIST_ADDR_MAX_COUNT.
+ *
+ * @retval ::NRF_SUCCESS The whitelist is successfully set/cleared.
+ * @retval ::NRF_ERROR_INVALID_ADDR The whitelist (or one of its entries) provided is invalid.
+ * @retval ::BLE_ERROR_GAP_WHITELIST_IN_USE The whitelist is in use by a BLE role and cannot be set or cleared.
+ * @retval ::BLE_ERROR_GAP_INVALID_BLE_ADDR Invalid address type is supplied.
+ * @retval ::NRF_ERROR_DATA_SIZE The given whitelist size is invalid (zero or too large); this can only return when
+ *                               pp_wl_addrs is not NULL.
+ */
+SVCALL(SD_BLE_GAP_WHITELIST_SET, uint32_t, sd_ble_gap_whitelist_set(ble_gap_addr_t const * const * pp_wl_addrs, uint8_t len));
+
+
+/**@brief Set device identity list.
+ *
+ * @note  Only one device identity list can be used at a time and the list is shared between the BLE roles.
+ *        The device identity list cannot be set if a BLE role is using the list.
+ *
+ * @param[in] pp_id_keys     Pointer to an array of peer identity addresses and peer IRKs, if NULL the device identity list will be cleared.
+ * @param[in] pp_local_irks  Pointer to an array of local IRKs. Each entry in the array maps to the entry in pp_id_keys at the same index.
+ *                           To fill in the list with the currently set device IRK for all peers, set to NULL.
+ * @param[in] len            Length of the device identity list, maximum @ref BLE_GAP_DEVICE_IDENTITIES_MAX_COUNT.
+ *
+ * @mscs
+ * @mmsc{@ref BLE_GAP_PRIVACY_ADV_MSC}
+ * @mmsc{@ref BLE_GAP_PRIVACY_SCAN_MSC}
+ * @mmsc{@ref BLE_GAP_PRIVACY_SCAN_PRIVATE_SCAN_MSC}
+ * @mmsc{@ref BLE_GAP_PRIVACY_ADV_DIR_PRIV_MSC}
+ * @mmsc{@ref BLE_GAP_PERIPH_CONN_PRIV_MSC}
+ * @mmsc{@ref BLE_GAP_CENTRAL_CONN_PRIV_MSC}
+ * @endmscs
+ *
+ * @retval ::NRF_SUCCESS The device identity list successfully set/cleared.
+ * @retval ::NRF_ERROR_INVALID_ADDR The device identity list (or one of its entries) provided is invalid.
+ *                                  This code may be returned if the local IRK list also has an invalid entry.
+ * @retval ::BLE_ERROR_GAP_DEVICE_IDENTITIES_IN_USE The device identity list is in use and cannot be set or cleared.
+ * @retval ::BLE_ERROR_GAP_DEVICE_IDENTITIES_DUPLICATE The device identity list contains multiple entries with the same identity address.
+ * @retval ::BLE_ERROR_GAP_INVALID_BLE_ADDR Invalid address type is supplied.
+ * @retval ::NRF_ERROR_DATA_SIZE The given device identity list size invalid (zero or too large); this can
+ *                               only return when pp_id_keys is not NULL.
+ */
+SVCALL(SD_BLE_GAP_DEVICE_IDENTITIES_SET, uint32_t, sd_ble_gap_device_identities_set(ble_gap_id_key_t const * const * pp_id_keys, ble_gap_irk_t const * const * pp_local_irks, uint8_t len));
+
+
+/**@brief Set privacy settings.
+ *
+ * @note  Privacy settings cannot be changed while advertising, scanning or creating a connection.
+ *
+ * @param[in] p_privacy_params Privacy settings.
+ *
+ * @mscs
+ * @mmsc{@ref BLE_GAP_PRIVACY_ADV_MSC}
+ * @mmsc{@ref BLE_GAP_PRIVACY_SCAN_MSC}
+ * @mmsc{@ref BLE_GAP_PRIVACY_ADV_DIR_PRIV_MSC}
+ * @endmscs
+ *
+ * @retval ::NRF_SUCCESS Set successfully.
+ * @retval ::NRF_ERROR_BUSY The stack is busy, process pending events and retry.
+ * @retval ::BLE_ERROR_GAP_INVALID_BLE_ADDR Invalid address type is supplied.
+ * @retval ::NRF_ERROR_INVALID_ADDR The pointer to privacy settings is NULL or invalid.
+ *                                  Otherwise, the p_device_irk pointer in privacy parameter is an invalid pointer.
+ * @retval ::NRF_ERROR_INVALID_PARAM Out of range parameters are provided.
+ * @retval ::NRF_ERROR_INVALID_STATE Privacy settings cannot be changed while advertising, scanning
+ *                                   or creating a connection.
+ */
+SVCALL(SD_BLE_GAP_PRIVACY_SET, uint32_t, sd_ble_gap_privacy_set(ble_gap_privacy_params_t const *p_privacy_params));
+
+
+/**@brief Get privacy settings.
+ *
+ * @note  The privacy settings returned include the current device irk as well.
+ *
+ * @param[in] p_privacy_params Privacy settings.
+ *
+ * @retval ::NRF_SUCCESS            Privacy settings read.
+ * @retval ::NRF_ERROR_INVALID_ADDR The pointer given for returning the privacy settings may be NULL or invalid.
+ *                                  Otherwise, the p_device_irk pointer in privacy parameter is an invalid pointer.
+ */
+SVCALL(SD_BLE_GAP_PRIVACY_GET, uint32_t, sd_ble_gap_privacy_get(ble_gap_privacy_params_t *p_privacy_params));
 
 
 /**@brief Set, clear or update advertising and scan response data.
  *
- * @note The format of the advertising data will be checked by this call to ensure interoperability.
- *       Limitations imposed by this API call to the data provided include having a flags data type in the scan response data and
- *       duplicating the local name in the advertising data and scan response data.
+ * @note  The format of the advertising data will be checked by this call to ensure interoperability.
+ *        Limitations imposed by this API call to the data provided include having a flags data type in the scan response data and
+ *        duplicating the local name in the advertising data and scan response data.
  *
- * @note To clear the advertising data and set it to a 0-length packet, simply provide a valid pointer (p_data/p_sr_data) with its corresponding
+ * @note  To clear the advertising data and set it to a 0-length packet, simply provide a valid pointer (p_data/p_sr_data) with its corresponding
  *        length (dlen/srdlen) set to 0.
  *
  * @note The call will fail if p_data and p_sr_data are both NULL since this would have no effect.
@@ -1083,13 +1405,7 @@ SVCALL(SD_BLE_GAP_ADV_DATA_SET, uint32_t, sd_ble_gap_adv_data_set(uint8_t const 
 
 /**@brief Start advertising (GAP Discoverable, Connectable modes, Broadcast Procedure).
  *
- * @note An application can start an advertising procedure for broadcasting purposes while a connection
- *       is active. After a @ref BLE_GAP_EVT_CONNECTED event is received, this function may therefore
- *       be called to start a broadcast advertising procedure. The advertising procedure
- *       cannot however be connectable (it must be of type @ref BLE_GAP_ADV_TYPE_ADV_SCAN_IND or
- *       @ref BLE_GAP_ADV_TYPE_ADV_NONCONN_IND). @note Only one advertiser may be active at any time.
- *
- * @note To use the currently active whitelist set p_adv_params->p_whitelist to NULL.
+ * @note Only one advertiser may be active at any time.
  *
  * @events
  * @event{@ref BLE_GAP_EVT_CONNECTED, Generated after connection has been established through connectable advertising.}
@@ -1098,26 +1414,27 @@ SVCALL(SD_BLE_GAP_ADV_DATA_SET, uint32_t, sd_ble_gap_adv_data_set(uint8_t const 
  *
  * @mscs
  * @mmsc{@ref BLE_GAP_ADV_MSC}
+ * @mmsc{@ref BLE_GAP_PERIPH_CONN_PRIV_MSC}
+ * @mmsc{@ref BLE_GAP_PRIVACY_ADV_DIR_PRIV_MSC}
  * @mmsc{@ref BLE_GAP_WL_SHARE_MSC}
  * @endmscs
  *
  * @param[in] p_adv_params Pointer to advertising parameters structure.
+ * @param[in] conn_cfg_tag Tag identifying a configuration set by @ref sd_ble_cfg_set or @ref
+ *                         BLE_CONN_CFG_TAG_DEFAULT to use the default connection configuration.
  *
  * @retval ::NRF_SUCCESS The BLE stack has started advertising.
  * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
  * @retval ::NRF_ERROR_INVALID_STATE Invalid state to perform operation.
  * @retval ::NRF_ERROR_CONN_COUNT The limit of available connections has been reached; connectable advertiser cannot be started.
- * @retval ::NRF_ERROR_NO_MEM The configured memory pools (see @ref ble_conn_bw_counts_t) are not large enough for the
- *                            bandwidth selected for this connection.
  * @retval ::NRF_ERROR_INVALID_PARAM Invalid parameter(s) supplied, check the accepted ranges and limits.
  * @retval ::BLE_ERROR_GAP_INVALID_BLE_ADDR Invalid Bluetooth address supplied.
  * @retval ::BLE_ERROR_GAP_DISCOVERABLE_WITH_WHITELIST Discoverable mode and whitelist incompatible.
  * @retval ::NRF_ERROR_BUSY The stack is busy, process pending events and retry.
- * @retval ::BLE_ERROR_GAP_WHITELIST_IN_USE Unable to replace the whitelist while another operation is using it.
  * @retval ::NRF_ERROR_RESOURCES Not enough BLE role slots available.
  *                               Stop one or more currently active roles (Central, Peripheral or Observer) and try again
  */
-SVCALL(SD_BLE_GAP_ADV_START, uint32_t, sd_ble_gap_adv_start(ble_gap_adv_params_t const *p_adv_params));
+SVCALL(SD_BLE_GAP_ADV_START, uint32_t, sd_ble_gap_adv_start(ble_gap_adv_params_t const *p_adv_params, uint8_t conn_cfg_tag));
 
 
 /**@brief Stop advertising (GAP Discoverable, Connectable modes, Broadcast Procedure).
@@ -1131,6 +1448,7 @@ SVCALL(SD_BLE_GAP_ADV_START, uint32_t, sd_ble_gap_adv_start(ble_gap_adv_params_t
  * @retval ::NRF_ERROR_INVALID_STATE Invalid state to perform operation (most probably not in advertising state).
  */
 SVCALL(SD_BLE_GAP_ADV_STOP, uint32_t, sd_ble_gap_adv_stop(void));
+
 
 
 /**@brief Update connection parameters.
@@ -1196,8 +1514,9 @@ SVCALL(SD_BLE_GAP_DISCONNECT, uint32_t, sd_ble_gap_disconnect(uint16_t conn_hand
 
 /**@brief Set the radio's transmit power.
  *
- * @param[in] tx_power Radio transmit power in dBm (accepted values are -40, -30, -20, -16, -12, -8, -4, 0, and 4 dBm).
+ * @param[in] tx_power Radio transmit power in dBm (accepted values are -40, -30, -20, -16, -12, -8, -4, 0, 3, and 4 dBm).
  *
+ * @note The +3dBm setting is only available on nRF52 series ICs.
  * @note The -30dBm setting is only available on nRF51 series ICs.
  * @note The -40dBm setting is only available on nRF52 series ICs.
  *
@@ -1250,6 +1569,9 @@ SVCALL(SD_BLE_GAP_PPCP_GET, uint32_t, sd_ble_gap_ppcp_get(ble_gap_conn_params_t 
 
 /**@brief Set GAP device name.
  *
+ * @note  If the device name is located in application flash memory (see @ref ble_gap_cfg_device_name_t),
+ *        it cannot be changed. Then @ref NRF_ERROR_FORBIDDEN will be returned.
+ *
  * @param[in] p_write_perm Write permissions for the Device Name characteristic, see @ref ble_gap_conn_sec_mode_t.
  * @param[in] p_dev_name Pointer to a UTF-8 encoded, <b>non NULL-terminated</b> string.
  * @param[in] len Length of the UTF-8, <b>non NULL-terminated</b> string pointed to by p_dev_name in octets (must be smaller or equal than @ref BLE_GAP_DEVNAME_MAX_LEN).
@@ -1258,16 +1580,17 @@ SVCALL(SD_BLE_GAP_PPCP_GET, uint32_t, sd_ble_gap_ppcp_get(ble_gap_conn_params_t 
  * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
  * @retval ::NRF_ERROR_INVALID_PARAM Invalid parameter(s) supplied.
  * @retval ::NRF_ERROR_DATA_SIZE Invalid data size(s) supplied.
+ * @retval ::NRF_ERROR_FORBIDDEN Device name is not writable.
  */
 SVCALL(SD_BLE_GAP_DEVICE_NAME_SET, uint32_t, sd_ble_gap_device_name_set(ble_gap_conn_sec_mode_t const *p_write_perm, uint8_t const *p_dev_name, uint16_t len));
 
 
 /**@brief Get GAP device name.
  *
- * @note          If the device name is longer than the size of the supplied buffer,
- *                p_len will return the complete device name length,
- *                and not the number of bytes actually returned in p_dev_name.
- *                The application may use this information to allocate a suitable buffer size.
+ * @note  If the device name is longer than the size of the supplied buffer,
+ *        p_len will return the complete device name length,
+ *        and not the number of bytes actually returned in p_dev_name.
+ *        The application may use this information to allocate a suitable buffer size.
  *
  * @param[out]    p_dev_name Pointer to an empty buffer where the UTF-8 <b>non NULL-terminated</b> string will be placed. Set to NULL to obtain the complete device name length.
  * @param[in,out] p_len      Length of the buffer pointed by p_dev_name, complete device name length on output.
@@ -1411,7 +1734,7 @@ SVCALL(SD_BLE_GAP_SEC_PARAMS_REPLY, uint32_t, sd_ble_gap_sec_params_reply(uint16
  * @param[in] p_key If key type is @ref BLE_GAP_AUTH_KEY_TYPE_NONE, then NULL.
  *                  If key type is @ref BLE_GAP_AUTH_KEY_TYPE_PASSKEY, then a 6-byte ASCII string (digit 0..9 only, no NULL termination)
  *                     or NULL when confirming LE Secure Connections Numeric Comparison.
- *                  If key type is @ref BLE_GAP_AUTH_KEY_TYPE_OOB, then a 16-byte OOB key value in Little Endian format.
+ *                  If key type is @ref BLE_GAP_AUTH_KEY_TYPE_OOB, then a 16-byte OOB key value in little-endian format.
  *
  * @retval ::NRF_SUCCESS Authentication key successfully set.
  * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
@@ -1476,8 +1799,8 @@ SVCALL(SD_BLE_GAP_KEYPRESS_NOTIFY, uint32_t, sd_ble_gap_keypress_notify(uint16_t
 
 /**@brief Generate a set of OOB data to send to a peer out of band.
  *
- * @note The @ref ble_gap_addr_t included in the OOB data returned will be the currently active one (or, if a connection has already been established,
- *       the one used during connection setup). The application may manually overwrite it with an updated value.
+ * @note  The @ref ble_gap_addr_t included in the OOB data returned will be the currently active one (or, if a connection has already been established,
+ *        the one used during connection setup). The application may manually overwrite it with an updated value.
  *
  * @mscs
  * @mmsc{@ref BLE_GAP_PERIPH_LESC_BONDING_OOB_MSC}
@@ -1496,9 +1819,8 @@ SVCALL(SD_BLE_GAP_LESC_OOB_DATA_GET, uint32_t, sd_ble_gap_lesc_oob_data_get(uint
 
 /**@brief Provide the OOB data sent/received out of band.
  *
- * @note At least one of the 2 pointers provided must be different from NULL.
- * @note An authentication procedure with OOB selected as an algorithm must be in progress when calling this function.
- * @note A @ref BLE_GAP_EVT_LESC_DHKEY_REQUEST event with the oobd_req set to 1 must have been received prior to calling this function.
+ * @note  An authentication procedure with OOB selected as an algorithm must be in progress when calling this function.
+ * @note  A @ref BLE_GAP_EVT_LESC_DHKEY_REQUEST event with the oobd_req set to 1 must have been received prior to calling this function.
  *
  * @events
  * @event{This function is used during authentication procedures\, see the list of events in the documentation of @ref sd_ble_gap_authenticate.}
@@ -1510,8 +1832,11 @@ SVCALL(SD_BLE_GAP_LESC_OOB_DATA_GET, uint32_t, sd_ble_gap_lesc_oob_data_get(uint
  * @endmscs
  *
  * @param[in] conn_handle Connection handle.
- * @param[in] p_oobd_own The OOB data sent out of band to a peer or NULL if none sent.
+ * @param[in] p_oobd_own The OOB data sent out of band to a peer or NULL if the peer has not received OOB data.
+ *                       Must correspond to @ref ble_gap_sec_params_t::oob flag in @ref BLE_GAP_EVT_SEC_PARAMS_REQUEST.
  * @param[in] p_oobd_peer The OOB data received out of band from a peer or NULL if none received.
+ *                        Must correspond to @ref ble_gap_sec_params_t::oob flag in @ref sd_ble_gap_authenticate in the central role
+ *                        or @ref sd_ble_gap_sec_params_reply in the peripheral role.
  *
  * @retval ::NRF_SUCCESS OOB data accepted.
  * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
@@ -1586,12 +1911,12 @@ SVCALL(SD_BLE_GAP_CONN_SEC_GET, uint32_t, sd_ble_gap_conn_sec_get(uint16_t conn_
 
 /**@brief Start reporting the received signal strength to the application.
  *
- * A new event is reported whenever the RSSI value changes, until @ref sd_ble_gap_rssi_stop is called.
+ *        A new event is reported whenever the RSSI value changes, until @ref sd_ble_gap_rssi_stop is called.
  *
  * @events
  * @event{@ref BLE_GAP_EVT_RSSI_CHANGED, New RSSI data available. How often the event is generated is
-                                         dependent on the settings of the <code>threshold_dbm</code>
-                                         and <code>skip_count</code> input parameters.}
+ *                                       dependent on the settings of the <code>threshold_dbm</code>
+ *                                       and <code>skip_count</code> input parameters.}
  * @endevents
  *
  * @mscs
@@ -1612,8 +1937,8 @@ SVCALL(SD_BLE_GAP_RSSI_START, uint32_t, sd_ble_gap_rssi_start(uint16_t conn_hand
 
 /**@brief Stop reporting the received signal strength.
  *
- * @note An RSSI change detected before the call but not yet received by the application
- * may be reported after @ref sd_ble_gap_rssi_stop has been called.
+ * @note  An RSSI change detected before the call but not yet received by the application
+ *        may be reported after @ref sd_ble_gap_rssi_stop has been called.
  *
  * @mscs
  * @mmsc{@ref BLE_GAP_CENTRAL_RSSI_READ_MSC}
@@ -1631,8 +1956,8 @@ SVCALL(SD_BLE_GAP_RSSI_STOP, uint32_t, sd_ble_gap_rssi_stop(uint16_t conn_handle
 
 /**@brief Get the received signal strength for the last connection event.
  *
- * @ref sd_ble_gap_rssi_start must be called to start reporting RSSI before using this function. @ref NRF_ERROR_NOT_FOUND
- * will be returned until RSSI was sampled for the first time after calling @ref sd_ble_gap_rssi_start.
+ *        @ref sd_ble_gap_rssi_start must be called to start reporting RSSI before using this function. @ref NRF_ERROR_NOT_FOUND
+ *        will be returned until RSSI was sampled for the first time after calling @ref sd_ble_gap_rssi_start.
  *
  * @mscs
  * @mmsc{@ref BLE_GAP_CENTRAL_RSSI_READ_MSC}
@@ -1652,8 +1977,6 @@ SVCALL(SD_BLE_GAP_RSSI_GET, uint32_t, sd_ble_gap_rssi_get(uint16_t conn_handle, 
 
 /**@brief Start scanning (GAP Discovery procedure, Observer Procedure).
  *
- * @note To use the currently active whitelist set p_scan_params->p_whitelist to NULL.
- *
  * @events
  * @event{@ref BLE_GAP_EVT_ADV_REPORT, An advertising or scan response packet has been received.}
  * @event{@ref BLE_GAP_EVT_TIMEOUT, Scanner has timed out.}
@@ -1671,7 +1994,6 @@ SVCALL(SD_BLE_GAP_RSSI_GET, uint32_t, sd_ble_gap_rssi_get(uint16_t conn_handle, 
  * @retval ::NRF_ERROR_INVALID_STATE Invalid state to perform operation.
  * @retval ::NRF_ERROR_INVALID_PARAM Invalid parameter(s) supplied.
  * @retval ::NRF_ERROR_BUSY The stack is busy, process pending events and retry.
- * @retval ::BLE_ERROR_GAP_WHITELIST_IN_USE Unable to replace the whitelist while another operation is using it.
  * @retval ::NRF_ERROR_RESOURCES Not enough BLE role slots available.
  *                               Stop one or more currently active roles (Central, Peripheral or Broadcaster) and try again
  */
@@ -1693,33 +2015,39 @@ SVCALL(SD_BLE_GAP_SCAN_STOP, uint32_t, sd_ble_gap_scan_stop(void));
 
 /**@brief Create a connection (GAP Link Establishment).
  *
- * @note To use the currently active whitelist set p_scan_params->p_whitelist to NULL.
  * @note If a scanning procedure is currently in progress it will be automatically stopped when calling this function.
+ *       The scanning procedure will be stopped even if the function returns an error.
  *
  * @mscs
  * @mmsc{@ref BLE_GAP_WL_SHARE_MSC}
+ * @mmsc{@ref BLE_GAP_CENTRAL_CONN_PRIV_MSC}
  * @mmsc{@ref BLE_GAP_CENTRAL_CONN_MSC}
  * @endmscs
  *
- * @param[in] p_peer_addr   Pointer to peer address. If the selective bit is set in @ref ble_gap_scan_params_t, then this must be NULL.
+ * @param[in] p_peer_addr   Pointer to peer address. If the use_whitelist bit is set in @ref ble_gap_scan_params_t, then this is ignored.
+ *                          If @ref ble_gap_addr_t::addr_id_peer is set then p_peer_addr must be present in the device identity list
+ *                          see @ref sd_ble_gap_device_identities_set.
  * @param[in] p_scan_params Pointer to scan parameters structure.
  * @param[in] p_conn_params Pointer to desired connection parameters.
+ * @param[in] conn_cfg_tag  Tag identifying a configuration set by @ref sd_ble_cfg_set or @ref
+ *                          BLE_CONN_CFG_TAG_DEFAULT to use the default connection configuration.
  *
  * @retval ::NRF_SUCCESS Successfully initiated connection procedure.
  * @retval ::NRF_ERROR_INVALID_ADDR Invalid parameter(s) pointer supplied.
  * @retval ::NRF_ERROR_INVALID_PARAM Invalid parameter(s) supplied.
- * @retval ::NRF_ERROR_INVALID_STATE Invalid state to perform operation.
+ *                                   - Invalid parameter(s) in p_scan_params or p_conn_params.
+ *                                   - Use of whitelist requested but whitelist has not been set, see @ref sd_ble_gap_whitelist_set.
+ *                                   - Peer address was not present in the device identity list, see @ref sd_ble_gap_device_identities_set.
+ * @retval ::NRF_ERROR_INVALID_STATE The SoftDevice is in an invalid state to perform this operation. This may be due to an
+ *                                   existing locally initiated connect procedure, which must complete before initiating again.
  * @retval ::BLE_ERROR_GAP_INVALID_BLE_ADDR Invalid Peer address.
  * @retval ::NRF_ERROR_CONN_COUNT The limit of available connections has been reached.
- * @retval ::NRF_ERROR_NO_MEM The configured memory pool (see @ref ble_conn_bw_counts_t) is not large enough for the
- *                            bandwidth selected for this connection.
  * @retval ::NRF_ERROR_BUSY The stack is busy, process pending events and retry. If another connection is being established
  *                          wait for the corresponding @ref BLE_GAP_EVT_CONNECTED event before calling again.
- * @retval ::BLE_ERROR_GAP_WHITELIST_IN_USE Unable to replace the whitelist while another operation is using it.
  * @retval ::NRF_ERROR_RESOURCES Not enough BLE role slots available.
  *                               Stop one or more currently active roles (Central, Peripheral or Broadcaster) and try again
  */
-SVCALL(SD_BLE_GAP_CONNECT, uint32_t, sd_ble_gap_connect(ble_gap_addr_t const *p_peer_addr, ble_gap_scan_params_t const *p_scan_params, ble_gap_conn_params_t const *p_conn_params));
+SVCALL(SD_BLE_GAP_CONNECT, uint32_t, sd_ble_gap_connect(ble_gap_addr_t const *p_peer_addr, ble_gap_scan_params_t const *p_scan_params, ble_gap_conn_params_t const *p_conn_params, uint8_t conn_cfg_tag));
 
 
 /**@brief Cancel a connection establishment.
@@ -1728,17 +2056,55 @@ SVCALL(SD_BLE_GAP_CONNECT, uint32_t, sd_ble_gap_connect(ble_gap_addr_t const *p_
  * @mmsc{@ref BLE_GAP_CENTRAL_CONN_MSC}
  * @endmscs
  *
- * @retval ::NRF_SUCCESS Successfully cancelled an ongoing connection procedure.
+ * @retval ::NRF_SUCCESS Successfully canceled an ongoing connection procedure.
  * @retval ::NRF_ERROR_INVALID_STATE Invalid state to perform operation.
  */
 SVCALL(SD_BLE_GAP_CONNECT_CANCEL, uint32_t, sd_ble_gap_connect_cancel(void));
+
+
+/**@brief Initiate or respond to a Data Length Update Procedure.
+ *
+ * @note Only symmetric input parameters for the Data Length Update is supported. Only @ref
+ *       BLE_GAP_DATA_LENGTH_AUTO for max_tx_time_us and max_rx_time_us is supported.
+ *
+ * @note If the application uses @ref BLE_GAP_DATA_LENGTH_AUTO for one or more members of
+ *       p_dl_params, the SoftDevice will choose the highest value supported in current
+ *       configuration and connection parameters.
+ *
+ * @param[in]   conn_handle       Connection handle.
+ * @param[in]   p_dl_params       Pointer to local parameters to be used in Data Length Update
+ *                                Procedure. Set any member to @ref BLE_GAP_DATA_LENGTH_AUTO to let
+ *                                the SoftDevice automatically decide the value for that member.
+ *                                Set to NULL to use automatic values for all members.
+ * @param[out]  p_dl_limitation   Pointer to limitation to be written when local device does not
+ *                                have enough resources to accommodate the requested Data Length
+ *                                Update parameters. Ignored if NULL.
+ *
+ * @mscs
+ * @mmsc{@ref BLE_GAP_DATA_LENGTH_UPDATE_PROCEDURE_MSC}
+ * @endmscs
+ *
+ * @retval ::NRF_SUCCESS Successfully set Data Length Extension initiation/response parameters.
+ * @retval ::NRF_ERROR_INVALID_ADDR Invalid pointer supplied.
+ * @retval ::BLE_ERROR_INVALID_CONN_HANDLE Invalid connection handle parameter supplied.
+ * @retval ::NRF_ERROR_INVALID_STATE Invalid state to perform operation.
+ * @retval ::NRF_ERROR_INVALID_PARAM Invalid parameters supplied.
+ * @retval ::NRF_ERROR_NOT_SUPPORTED The requested parameters are not supported by the SoftDevice.
+ * @retval ::NRF_ERROR_RESOURCES The requested parameters can not be accommodated. Inspect
+ *                               p_dl_limitation so see where the limitation is.
+ * @retval ::NRF_ERROR_BUSY Peer has already initiated a Data Length Update Procedure. Process the
+ *                          pending @ref BLE_GAP_EVT_DATA_LENGTH_UPDATE_REQUEST event to respond.
+ */
+SVCALL(SD_BLE_GAP_DATA_LENGTH_UPDATE, uint32_t, sd_ble_gap_data_length_update(uint16_t conn_handle, ble_gap_data_length_params_t const *p_dl_params, ble_gap_data_length_limitation_t *p_dl_limitation));
+
+
 
 /** @} */
 
 #ifdef __cplusplus
 }
 #endif
-#endif // NRF_BLE_GAP_H__
+#endif // BLE_GAP_H__
 
 /**
   @}

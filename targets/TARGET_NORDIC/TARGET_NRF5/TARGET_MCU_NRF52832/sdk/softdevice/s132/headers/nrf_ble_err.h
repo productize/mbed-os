@@ -36,7 +36,6 @@
  * 
  */
 
-
 /**
   @addtogroup BLE_COMMON
   @{
@@ -66,8 +65,7 @@ extern "C" {
 #define BLE_ERROR_NOT_ENABLED            (NRF_ERROR_STK_BASE_NUM+0x001) /**< @ref sd_ble_enable has not been called. */
 #define BLE_ERROR_INVALID_CONN_HANDLE    (NRF_ERROR_STK_BASE_NUM+0x002) /**< Invalid connection handle. */
 #define BLE_ERROR_INVALID_ATTR_HANDLE    (NRF_ERROR_STK_BASE_NUM+0x003) /**< Invalid attribute handle. */
-#define BLE_ERROR_NO_TX_PACKETS          (NRF_ERROR_STK_BASE_NUM+0x004) /**< Not enough application packets available on this connection. */
-#define BLE_ERROR_INVALID_ROLE           (NRF_ERROR_STK_BASE_NUM+0x005) /**< Invalid role. */
+#define BLE_ERROR_INVALID_ROLE           (NRF_ERROR_STK_BASE_NUM+0x004) /**< Invalid role. */
 /** @} */
 
 
