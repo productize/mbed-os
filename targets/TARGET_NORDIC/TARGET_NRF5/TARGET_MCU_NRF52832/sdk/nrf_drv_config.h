@@ -490,6 +490,6 @@
 #define I2S_CONFIG_RATIO        NRF_I2S_RATIO_256X
 #endif
 
-#include "nrf_drv_config_validation.h"
+#include "sdk_validation.h"
 
 #endif // NRF_DRV_CONFIG_H
