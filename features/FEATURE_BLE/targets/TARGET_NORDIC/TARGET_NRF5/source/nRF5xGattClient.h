@@ -158,8 +158,10 @@ public:
         switch (rc) {
             case NRF_ERROR_BUSY:
                 return BLE_STACK_BUSY;
+#ifdef BLE_ERROR_NO_TX_PACKETS
             case BLE_ERROR_NO_TX_PACKETS:
                 return BLE_ERROR_NO_MEM;
+#endif
             case BLE_ERROR_INVALID_CONN_HANDLE:
             case NRF_ERROR_INVALID_STATE:
             case NRF_ERROR_INVALID_ADDR:
