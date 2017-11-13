@@ -147,20 +147,44 @@ error_t btle_init(void)
      */
     static const bool IS_SRVC_CHANGED_CHARACT_PRESENT = true;
 
-    ble_enable_params_t ble_enable_params;
-    uint32_t err_code = softdevice_enable_get_default_config(CENTRAL_LINK_COUNT,
-                                                    PERIPHERAL_LINK_COUNT,
-                                                    &ble_enable_params);
+    uint32_t ram_start = 0;
+    softdevice_app_ram_start_get(&ram_start);
 
-    ble_enable_params.gatts_enable_params.attr_tab_size  = GATTS_ATTR_TAB_SIZE;
-    ble_enable_params.gatts_enable_params.service_changed  = IS_SRVC_CHANGED_CHARACT_PRESENT;
-    ble_enable_params.common_enable_params.vs_uuid_count = UUID_TABLE_MAX_ENTRIES;
+    ble_cfg_t ble_cfg;
+    memset(&ble_cfg, 0, sizeof(ble_cfg));
+    ble_cfg.gap_cfg.role_count_cfg.periph_role_count  = PERIPHERAL_LINK_COUNT;
+    ble_cfg.gap_cfg.role_count_cfg.central_role_count = CENTRAL_LINK_COUNT;
+    ble_cfg.gap_cfg.role_count_cfg.central_sec_count  = BLE_GAP_ROLE_COUNT_CENTRAL_SEC_DEFAULT;
+
+    if (sd_ble_cfg_set(BLE_GAP_CFG_ROLE_COUNT, &ble_cfg, ram_start) != NRF_SUCCESS) {
+        return ERROR_INVALID_PARAM;
+    }
+
+
+    memset(&ble_cfg, 0, sizeof(ble_cfg));
+    ble_cfg.gatts_cfg.attr_tab_size.attr_tab_size  = GATTS_ATTR_TAB_SIZE;
+    if (sd_ble_cfg_set(BLE_GATTS_CFG_ATTR_TAB_SIZE, &ble_cfg, ram_start) != NRF_SUCCESS) {
+        return ERROR_INVALID_PARAM;
+    }
+
+    memset(&ble_cfg, 0, sizeof(ble_cfg));
+    ble_cfg.gatts_cfg.service_changed.service_changed  = IS_SRVC_CHANGED_CHARACT_PRESENT;
+    if (sd_ble_cfg_set(BLE_GATTS_CFG_SERVICE_CHANGED, &ble_cfg, ram_start) != NRF_SUCCESS) {
+        return ERROR_INVALID_PARAM;
+    }
+
+    
+    memset(&ble_cfg, 0, sizeof(ble_cfg));
+    ble_cfg.common_cfg.vs_uuid_cfg.vs_uuid_count  = UUID_TABLE_MAX_ENTRIES;
+    if (sd_ble_cfg_set(BLE_COMMON_CFG_VS_UUID, &ble_cfg, ram_start) != NRF_SUCCESS) {
+        return ERROR_INVALID_PARAM;
+    }
 
     if(err_code  != NRF_SUCCESS) {
         return ERROR_INVALID_PARAM;
     }
 
-    if (softdevice_enable(&ble_enable_params) != NRF_SUCCESS) {
+    if (softdevice_enable(&ram_start) != NRF_SUCCESS) {
         return ERROR_INVALID_PARAM;
     }
 
