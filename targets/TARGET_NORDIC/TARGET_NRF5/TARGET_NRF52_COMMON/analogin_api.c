@@ -28,7 +28,7 @@
 #define ADC_12BIT_RANGE 0xFFF
 #define ADC_RANGE       ADC_12BIT_RANGE
 
-#ifdef TARGET_SDK13
+#if defined(TARGET_SDK13) || defined(TARGET_SDK13_1)
 __STATIC_INLINE nrf_saadc_input_t nrf_drv_saadc_gpio_to_ain(uint32_t pin);
 #endif
 
@@ -95,7 +95,7 @@ float analogin_read(analogin_t *obj)
     return (float)value * (1.0f / (float)ADC_RANGE);
 }
 
-#ifdef TARGET_SDK13
+#if defined(TARGET_SDK13) || defined(TARGET_SDK13_1)
 /**
  * @brief Function for converting a GPIO pin number to an analog input pin number used in the channel
  *        configuration.
