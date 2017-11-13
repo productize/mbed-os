@@ -180,10 +180,6 @@ error_t btle_init(void)
         return ERROR_INVALID_PARAM;
     }
 
-    if(err_code  != NRF_SUCCESS) {
-        return ERROR_INVALID_PARAM;
-    }
-
     if (softdevice_enable(&ram_start) != NRF_SUCCESS) {
         return ERROR_INVALID_PARAM;
     }

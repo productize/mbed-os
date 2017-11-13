@@ -41,6 +41,7 @@
 #define NRF_DRV_CONFIG_H
 
 #include "nrf52832_peripherals.h"
+#include "app_util_platform.h"
 
 /**
  * Provide a non-zero value here in applications that need to use several
