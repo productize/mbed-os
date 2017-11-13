@@ -380,7 +380,7 @@ ble_error_t nRF5xGap::connect(const Address_t             peerAddr,
         scanParams.timeout     = _scanningParams.getTimeout();        /**< Scan timeout between 0x0001 and 0xFFFF in seconds, 0x0000 disables timeout. */
     }
 
-    uint32_t rc = sd_ble_gap_connect(&addr, &scanParams, &connParams);
+    uint32_t rc = sd_ble_gap_connect(&addr, &scanParams, &connParams, BLE_CONN_CFG_TAG_DEFAULT);
     if (rc == NRF_SUCCESS) {
         return BLE_ERROR_NONE;
     }
