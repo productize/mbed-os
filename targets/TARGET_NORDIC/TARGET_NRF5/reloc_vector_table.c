@@ -40,7 +40,7 @@
 #include "cmsis_nvic.h"
 #include "stdint.h"
 #include "nrf_sdm.h"
-#include "section_vars.h"
+#include "nrf_section.h"
 
 #if defined(__CC_ARM) || (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
     __attribute__ ((section(".bss.noinit"),zero_init))

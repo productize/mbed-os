@@ -49,6 +49,7 @@
 #include "app_util_platform.h"
 #include "nrf_gpio.h"
 #include "nrf_delay.h"
+#include "irq_handlers_hw.h"
 
 #include "us_ticker_api.h"
 
