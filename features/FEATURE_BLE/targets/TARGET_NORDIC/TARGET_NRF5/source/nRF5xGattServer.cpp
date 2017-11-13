@@ -446,10 +446,12 @@ void nRF5xGattServer::hwCallback(ble_evt_t *p_ble_evt)
             handle_value = gattsEventP->params.hvc.handle;
             break;
 
+#ifdef BLE_EVT_TX_COMPLETE
         case BLE_EVT_TX_COMPLETE: {
             handleDataSentEvent(p_ble_evt->evt.common_evt.params.tx_complete.count);
             return;
         }
+#endif
 
         case BLE_GATTS_EVT_SYS_ATTR_MISSING:
             sd_ble_gatts_sys_attr_set(gattsEventP->conn_handle, NULL, 0, 0);
