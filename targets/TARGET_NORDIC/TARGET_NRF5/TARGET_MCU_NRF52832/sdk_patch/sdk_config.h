@@ -3,6 +3,9 @@
 
 #include "nrf_drv_config.h"
 
+#define NRF_DRV_SPIS_DEFAULT_DEF        0xFF                /**< Default DEF character. */
+#define NRF_DRV_SPIS_DEFAULT_ORC        0xFF                /**< Default ORC character. */
+
 #define UART_DEFAULT_CONFIG_BAUDRATE UART0_CONFIG_BAUDRATE
 #define UART_DEFAULT_CONFIG_PARITY   UART0_CONFIG_PARITY
 #define UART_DEFAULT_CONFIG_HWFC     UART0_CONFIG_HWFC
