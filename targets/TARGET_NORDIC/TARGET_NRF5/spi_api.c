@@ -49,6 +49,7 @@
 #include "nrf_drv_spis.h"
 #include "app_util_platform.h"
 #include "sdk_config.h"
+#include "irq_handlers_hw.h"
 
 #if DEVICE_SPI_ASYNCH
     #define SPI_IDX(obj)    ((obj)->spi.spi_idx)
@@ -151,7 +152,7 @@ static void master_event_handler(uint8_t spi_idx,
     }
 }
 #define MASTER_EVENT_HANDLER(idx) \
-    static void master_event_handler_##idx(nrf_drv_spi_evt_t const *p_event) { \
+    static void master_event_handler_##idx(nrf_drv_spi_evt_t const *p_event, void *context) { \
         master_event_handler(SPI##idx##_INSTANCE_INDEX, p_event); \
     }
 #if SPI0_ENABLED
@@ -164,7 +165,7 @@ static void master_event_handler(uint8_t spi_idx,
     MASTER_EVENT_HANDLER(2)
 #endif
 
-static nrf_drv_spi_handler_t const m_master_event_handlers[SPI_COUNT] = {
+static const nrf_drv_spi_evt_handler_t m_master_event_handlers[SPI_COUNT] = {
 #if SPI0_ENABLED
     master_event_handler_0,
 #endif
@@ -300,7 +301,7 @@ void spi_init(spi_t *obj,
 
             nrf_drv_spi_t const *p_spi = &m_instances[i].master;
             ret_code_t ret_code = nrf_drv_spi_init(p_spi,
-                &config, m_master_event_handlers[i]);
+                &config, m_master_event_handlers[i], 0);
             if (ret_code == NRF_SUCCESS) {
                 p_spi_info->initialized = true;
                 p_spi_info->master      = true;
@@ -419,7 +420,7 @@ void spi_format(spi_t *obj, int bits, int mode, int slave)
         nrf_drv_spi_config_t config;
         prepare_master_config(&config, p_spi_info);
         (void)nrf_drv_spi_init(MASTER_INST(obj), &config,
-            m_master_event_handlers[SPI_IDX(obj)]);
+            m_master_event_handlers[SPI_IDX(obj)], 0);
     }
 }
 
@@ -460,7 +461,7 @@ void spi_frequency(spi_t *obj, int hz)
             nrf_drv_spi_t const *p_spi = MASTER_INST(obj);
             nrf_drv_spi_uninit(p_spi);
             (void)nrf_drv_spi_init(p_spi, &config,
-                m_master_event_handlers[SPI_IDX(obj)]);
+                m_master_event_handlers[SPI_IDX(obj)], 0);
         }
     }
     // There is no need to set anything in slaves when it comes to frequency,
