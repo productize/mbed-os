@@ -37,13 +37,14 @@
  */
  
 #ifndef TARGET_MCU_NRF51822
- 
+
 #include "mbed_assert.h"
 #include "mbed_error.h"
 #include "pwmout_api.h"
 #include "cmsis.h"
 #include "pinmap.h"
 #include "sdk_config.h"
+#include "irq_handlers_hw.h"
 
 #if DEVICE_PWMOUT
 
