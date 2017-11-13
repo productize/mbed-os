@@ -210,7 +210,7 @@ ble_error_t nRF5xGap::startAdvertising(const GapAdvertisingParams &params)
     adv_para.timeout     = params.getTimeout();
     
 
-    err = sd_ble_gap_adv_start(&adv_para);
+    err = sd_ble_gap_adv_start(&adv_para, BLE_CONN_CFG_TAG_DEFAULT);
     switch(err) {
         case ERROR_NONE:
             return BLE_ERROR_NONE;
