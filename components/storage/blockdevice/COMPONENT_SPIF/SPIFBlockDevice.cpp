@@ -89,6 +89,7 @@ enum spif_default_instructions {
     SPIF_RST = 0x99, // Reset
     SPIF_RDID = 0x9f, // Read Manufacturer and JDEC Device ID
     SPIF_ULBPR = 0x98, // Clears all write-protection bits in the Block-Protection register
+    SPIF_CER = 0xc7, // Chip erase
 };
 
 // Mutex is used for some SPI Driver commands that must be done sequentially with no other commands in between
@@ -406,6 +407,56 @@ exit_point:
     if (erase_failed) {
         _mutex->unlock();
     }
+
+    return status;
+}
+
+int SPIFBlockDevice::chip_erase()
+{
+    if (!_is_initialized) {
+        return BD_ERROR_DEVICE_ERROR;
+    }
+
+    int status = SPIF_BD_ERROR_OK;
+    bool mem_ready = false;
+
+    /* Chip erase takes up to 270 seconds IS25LP512M and the unit for
+       IS_MEM_READY_MAX_RETRIES seems to be milliseconds: */
+    int max_retries = (270 * 1000) / IS_MEM_READY_MAX_RETRIES;
+
+    tr_info("DEBUG: chip erase");
+
+    _mutex->lock();
+
+    if (_set_write_enable() != 0) {
+        tr_error("ERROR: SPI Chip Erase Device not ready - failed");
+        status = SPIF_BD_ERROR_READY_FAILED;
+        goto exit_point;
+    }
+
+    if (SPIF_BD_ERROR_OK != _spi_send_general_command(SPIF_CER,
+                                                      SPI_NO_ADDRESS_COMMAND,
+                                                      NULL, 0, NULL, 0)) {
+        status = SPIF_BD_ERROR_DEVICE_ERROR;
+        goto exit_point;
+    }
+
+    for (int i = 0; i < max_retries; i++) {
+        mem_ready = _is_mem_ready();
+        if (mem_ready) {
+            tr_error("Device ready after %d retries after chip erase", i);
+            break;
+        }
+    }
+
+    if (false == mem_ready) {
+        tr_error("ERROR: SPI After Erase Device not ready - failed\n");
+        status = SPIF_BD_ERROR_READY_FAILED;
+        goto exit_point;
+    }
+
+exit_point:
+    _mutex->unlock();
 
     return status;
 }

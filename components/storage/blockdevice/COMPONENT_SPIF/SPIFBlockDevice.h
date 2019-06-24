@@ -144,6 +144,15 @@ public:
      */
     virtual int erase(mbed::bd_addr_t addr, mbed::bd_size_t size);
 
+    /** Erase the whole device
+     *
+     *  @return         SPIF_BD_ERROR_OK(0) - success
+     *                  SPIF_BD_ERROR_DEVICE_ERROR - device driver transaction failed
+     *                  SPIF_BD_ERROR_READY_FAILED - Waiting for Memory ready failed or timed out
+     */
+    virtual int chip_erase();
+
+
     /** Get the size of a readable block
      *
      *  @return         Size of a readable block in bytes
